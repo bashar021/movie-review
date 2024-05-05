@@ -1,0 +1,28 @@
+#navbar_cont{
+ display: flex;
+ background-color: black;
+ color: white;
+ align-items: center;
+ justify-content:space-between;
+ padding-left: 5%;
+ padding-right: 5%;
+ font-size: 2vw;
+
+ padding-top: 10px;
+ padding-bottom: 10px;
+}
+#website_name{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+#login_signup_btn_box{
+    font-size: 60%;
+    width: 10%;
+}
+#login_signup_btn_box a{
+    margin-left: 5%;
+    margin-right: 5%;
+    text-decoration: none;
+    color: white;
+    
+}

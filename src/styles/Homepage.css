@@ -1,0 +1,52 @@
+.movie_review_box{
+    /* background-color: black; */
+    width: 80%;
+    color:white;
+    margin: auto;
+    padding: 1%;
+    border-radius: 30px;
+    /* border-style: solid; */
+    border-width: 1.5px;
+    background-color:rgba(66, 65, 65, 0.494);
+    margin-top: 2%;
+}
+.movie_review_box_child{
+    display: flex;
+
+}
+.movie_details_box{
+    margin-left: 2%;
+    /* background-color: aqua; */
+    width: 30%;
+}
+.movie_ref_box img{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.tags_cont span{
+    border-style: solid;
+    border-radius: 10px;
+    /* margin-left: 3%; */
+    margin-right: 6%;
+    padding-left: 3%;
+    padding-right: 3%;
+    border-width: 1.5px;
+    /* align-items: center; */
+    padding-bottom: 1%;
+}
+.movie_review_box_child2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.movie_review_box_child2 div span{
+    margin-right: 50%;
+}
+.movie_review_box_child button{
+    float: right;
+    right: 1px;
+    margin-left: 60%;
+    height: fit-content;
+    background-color: transparent;
+    border-style: none;
+}

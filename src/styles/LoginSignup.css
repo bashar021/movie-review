@@ -1,0 +1,88 @@
+#loginSignupCont{
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    /* z-index: -1; */
+    /* background-position; */
+    background-size: cover;
+    /* filter: brightness(50%); */
+}
+.loginSignupBox{
+    background-color: rgba(34, 33, 33, 0.815);
+    width: 50%;
+    height: 100vh;
+    text-align: center;
+    /* filter: brightness(100%); */
+}
+.loginSignupBox div{
+    margin: auto;
+    padding-top: 5%;
+    /* background-color: aqua; */
+}
+.loginSignupBox div h2{
+    color: white;
+    font-size: 35px;
+}
+
+.loginSignupBox div button{
+    margin: 2%;
+    background-color: transparent;
+    color: white;
+    /* border-style: none; */
+    padding-bottom: 1%;
+    cursor: pointer;
+    
+}
+.loginInActive{
+    border-bottom: none;
+    border-style: none;
+
+}
+.loginActive{
+    border-style: none;
+    border-bottom: solid;
+    border-color: red;
+    /* border-color: red; */
+}
+
+.loginSignupBox div form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    
+}
+.loginSignupBox div form div{
+    border-style: solid;
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: white;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-size: 20px;
+    padding: 2%;
+    display: flex;
+    justify-content:left;
+    /* align-items:baseline; */
+    width: 90%;
+    padding-left: 4%;
+}
+.loginSignupBox div form div img{
+    width: 20px;
+    margin-right: 2%;
+}
+.loginSignupBox div form input{
+    background-color: transparent;
+    border-style: none;
+    outline: none;
+    color: white;
+}
+.loginSignupBox div form button{
+    background-color: red;
+    border-style: none;
+    padding: 2%;
+    width: 60%;
+    margin: auto;
+    border-radius: 20px;
+    margin-top: 4%;
+}

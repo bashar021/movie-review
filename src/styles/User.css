@@ -1,0 +1,83 @@
+#userNavOptionsBox{
+    /* background-color:aqua ; */
+    padding-right: 0px;
+    margin-right: 0px;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+#notificationIconBtn{
+    background-color: transparent;
+    border-style: none;
+    width: fit-content;
+    height: fit-content;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+}
+#notificationIconBtn img{
+    width: 30px;
+    margin: 0px;
+    padding: 0px;
+    /* width: 60%; */
+}
+#userProfileBtn{
+    background-color: transparent;
+    /* width: 40px; */
+    border-style: none;
+    /* width: 40px; */
+    width: fit-content;
+    height: fit-content;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+
+}
+#userProfileBtn img{
+    /* width: 70%; */
+    width: 40px;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+
+
+
+
+
+/* Dropdown styles */
+.userOptionDropdown {
+    position: absolute;
+    top: 50px; /* Adjust this value based on your design */
+    right: 10px; /* Adjust this value based on your design */
+    background-color: rgba(137, 137, 137, 0.566);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    /* padding: 10px; */
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 10px 0 10px 0;
+
+  }
+  
+  .userOptionDropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .userOptionDropdown ul li {
+    padding: 8px 0;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+  }
+  
+  .userOptionDropdown ul li:hover {
+    background-color: #181818;
+  }

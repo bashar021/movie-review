@@ -7,11 +7,11 @@ import LoginSignup from './LoginSignup'
 export default function Homepage() {
   return (
     <>
-    {/* <Navbar></Navbar> */}
+    <Navbar></Navbar>
    
     {/* <Profile_Details></Profile_Details> */}
-    {/* <Homepage_body></Homepage_body> */}
-    <LoginSignup></LoginSignup>
+    <Homepage_body></Homepage_body>
+    {/* <LoginSignup></LoginSignup> */}
     
     </>
     

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import bg from '../images/loginsignupbg.jpg'
 import '../styles/LoginSignup.css'
 import name from '../icons/name.png'
@@ -6,9 +6,22 @@ import email_icon from '../icons/email-icon.png'
 import phone_icon from '../icons/phone-icon.png'
 import password_icon from '../icons/password-icon.png'
 
-export default function LoginSignup() {
+export default function LoginSignup(props) {
     const [signUpForm, setSignupForm] = useState(false)
     const [loginForm, setLoginForm] = useState(true)
+    useEffect(()=>{ 
+        const url = window.location.href.split("/");
+        if(url.slice(3).join("/") === 'signup'){
+            setLoginForm(false)
+            setSignupForm(true)
+        }else{
+            setLoginForm(true)
+            setSignupForm(false)
+
+        }
+        // console.log(url.slice(3).join("/"))
+
+    },[])
     return (
         <>
             <div id='loginSignupCont' style={{ backgroundImage: `url(${bg})` }}>

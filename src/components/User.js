@@ -37,7 +37,7 @@ export default function User() {
     return (
         <>
             <div id='navbar_cont'>
-                <div id='website_name'><span>Website Name</span></div>
+                <div id='website_name'><span style={{cursor:'pointer'}}  onClick={()=>{setSelectedUserOption('homepage')}}>Website Name</span></div>
                 <div id='userNavOptionsBox' >
                     <button id='notificationIconBtn'><img src={notification_icon} alt="notification" /></button>
                     <button onClick={() => { toggleDropdown() }} id='userProfileBtn'><img src={avatar_icon} alt="user" /></button>
@@ -58,6 +58,9 @@ export default function User() {
             }
             {selectedUserOption === 'homepage'? <Homepage_body></Homepage_body>:''}
             {selectedUserOption === 'profile'? <Profile_Details></Profile_Details>:''}
+            {selectedUserOption === 'my reviews'?<My_reviews></My_reviews>:''}
+            {selectedUserOption === 'watchlist'?<Watchlist></Watchlist>:''}
+
            
             
         </>

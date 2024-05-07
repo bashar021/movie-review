@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from 'react'
 import { useHistory,useNavigate  } from "react-router-dom";
 import bg from '../images/loginsignupbg.jpg'
 import '../styles/LoginSignup.css'
-import name from '../icons/name.png'
+import user_profile_icon from '../icons/name.png'
 import email_icon from '../icons/email-icon.png'
 import phone_icon from '../icons/phone-icon.png'
 import password_icon from '../icons/password-icon.png'
@@ -54,11 +54,11 @@ export default function LoginSignup(props) {
                         {signUpForm ?
                             <form onSubmit={(event)=>{event.preventDefault();handleSignUP()}}>
                                 <div>
-                                    <img src={name} alt="" />
+                                    <img src={user_profile_icon} alt="" />
                                     <input value={name} onChange={(event)=>{setName(event.target.value)}} type="text" placeholder='Name' required/>
                                 </div>
                                 <div>
-                                    <img src={name} alt="" />
+                                    <img src={user_profile_icon} alt="" />
                                     <input value={userName}  onChange={(event)=>{setUserName(event.target.value)}} type="text" placeholder="UserName" required/>
                                 </div>
                                 <div>
@@ -87,7 +87,7 @@ export default function LoginSignup(props) {
 
                         <form onSubmit={(event)=>{event.preventDefault();handleLogin()}}>
                             <div>
-                                <img src={name} alt="name" />
+                                <img src={user_profile_icon} alt="name" />
 
                                 <input value={userName} onChange={(event)=>{setUserName(event.target.value)}} type="text" placeholder="UserName" required />
                              </div>

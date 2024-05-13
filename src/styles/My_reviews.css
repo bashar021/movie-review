@@ -1,3 +1,28 @@
+
+
+
+.tags_cont{
+    /* background: ; */
+    /* background-color: aquamarine; */
+    /* height: auto; */
+    /* height: 100px; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:left;
+
+
+    /* height: ; */
+}
+.tags_cont span{
+    margin:5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    /* margin-top: 20% */
+    /* background-color:black; */
+}
+
+
 .myReviewBoxesImg{
     filter: brightness(50%);
     width: 100%;
@@ -282,4 +307,5 @@
 
 
 }
+
 

@@ -63,7 +63,7 @@ export default function Homepage_body(props) {
                     <img title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
                   </div>
                   <p>{item.movieName}</p>
-                  <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate}</span></p>
+                  <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
 
                   <div className='tags_cont'>
                     {

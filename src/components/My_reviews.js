@@ -12,10 +12,13 @@ import Get from '../controllers/Get.js'
 import Cookies from 'js-cookie'
 import { getMovieDetails } from '../controllers/TmdbApi.js'
 import UserNav from './UserNav.js'
+const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
+
 export default function My_reviews(props) {
   const [myReviewsList, setMyReviewsList] = useState([])
   const [displayMyReviewForm, setDisplayMyReviewForm] = useState(false)
   const [movieList, setMovieList] = useState([])
+  const [loader,setLoader] = useState(false)
   // const movieList = [1, 2, , 3, 4, 4,4,4,4,4,4,4,,4,4]
   const options = [
     'Horror',
@@ -108,6 +111,7 @@ export default function My_reviews(props) {
     setMyReviewTags(option);
   }
   async function saveMyReviewToDB() {
+    setLoader(true)
     console.log('review save function is calling')
     const data = {
       myReviewTags: myReviewTags,
@@ -123,6 +127,7 @@ export default function My_reviews(props) {
     const review = await Post(`${process.env.REACT_APP_SERVER_URL}/upload-review`, data, Cookies.get('jwt'))
     const jsonData = await review.json()
     if (review.status === 201) {
+      setLoader(false)
       console.log('review has been saved to db')
       console.log(jsonData.data.ReviewList)
       setMyReviewsList(jsonData.data.ReviewList)
@@ -130,6 +135,7 @@ export default function My_reviews(props) {
       setDisplayMyReviewForm(false)
     } else {
       console.log(jsonData.error)
+      setLoader(false)
 
     }
   }
@@ -147,15 +153,18 @@ export default function My_reviews(props) {
 
   }
   async function fetchMyReviews() {
+    setLoader(true)
     console.log('fetching my reviews funciton ')
   const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user-reviews`, Cookies.get('jwt'))
     const jsonData = await myReviews.json()
     if (myReviews.ok) {
       console.log('my review data has been fetched ')
+      setLoader(false)
       // console.log(jsonData.data.ReviewList)
       setMyReviewsList(jsonData.data.ReviewList)
     } else {
       console.log('can not fetch the user revies ')
+      setLoader(false)
     }
   }
   function editMyReview(review) {
@@ -242,22 +251,29 @@ export default function My_reviews(props) {
 
     <>
       <UserNav></UserNav>
+      {loader?<div className='loader'></div>:''}
+      
       <div id='myReviewsCont' style={{ color: 'white' }}>
 
         {myReviewsList.map((item, key) => {
           return (
             <div key={key} className='myReviewBoxes'>
-              <img className='myReviewBoxesImg' src={spidermanImg} alt="" />
+              {/* <img className='myReviewBoxesImg' src={spidermanImg} alt={item.movieName} /> */}
+              <img className='myReviewBoxesImg' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage}  alt={item.movieName} />
               <div className='myReviewBoxesDetailsCont' >
                 <div className='myReviewOptions'>
-                  <img src={imdb} alt="" />
-                  <img src={download_icon} alt="" />
-                  <img src={like_icon} alt="" />
-                  <img onClick={() => { editMyReview(item) }} src={edit_icon} alt="" />
-                  <img onClick={() => { deleteMyReview(item._id) }} src={delete_icon} alt="" />
+                  {/* <img src={imdb} alt="" /> */}
+                  <img title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
+                  {/* <img src={download_icon} alt="" /> */}
+                  <img title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
+                  <img onClick={() => { editMyReview(item) }} src={edit_icon} alt="edit" />
+                  <img onClick={() => { deleteMyReview(item._id) }} src={delete_icon} alt="delete" />
                 </div>
+
+
                 <div>
-                  <h6>{item.movieName}<span>(8.5)</span></h6>
+                  <h6>{item.movieName}</h6>
+                  <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
                   <div className='tags_cont'>
                     {
                       item.tags.map((tag, key) => {
@@ -266,7 +282,7 @@ export default function My_reviews(props) {
                     }
 
                   </div>
-                  <p className='myReviewDiscription'>{item.description}</p>
+                  <p className='myReviewDiscription'>{item.description.split(' ').slice(0, 30).join(' ')}{item.description.split(' ').length > 40 ? <span  style= {{color:'blue'}} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
                 </div>
               </div>
             </div>)

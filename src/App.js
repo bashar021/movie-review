@@ -38,7 +38,7 @@ function App() {
       const data = await Get(`${process.env.REACT_APP_SERVER_URL}/reviews`, Cookies.get('jwt'))
       const jsonData = await data.json()
       if (data) {
-        // setReviews(jsonData.data)
+        setReviews(jsonData.data)
         // console.log(jsonData.data)
       }
 

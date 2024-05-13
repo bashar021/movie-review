@@ -1,38 +1,148 @@
-.App {
-  text-align: center;
+.cursor-pointer{
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+
+.loader {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  height: 56px;
+  width: 56px;
+  box-sizing: border-box;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    rgba(39, 174, 96, 0) 0deg,
+    rgba(31, 144, 255, 0) 0.04deg,
+    #1f90ff 360deg
+  );
+  border-radius: 56px;
+ 
+  animation: 1s rotate infinite linear;
+  margin:auto;
+  margin-top:1%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.loader::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 40px;
+  width: 40px;
+  /* background: #957777; */
+  background-color: #121212;
+  border-radius: 48px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.loader::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  width: 8px;
+  background: #1f90ff;
+  border-radius: 8px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
+@keyframes rotate {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
+}
+
+/* 
+
+
+.commentLoader{
+  
+  height: 56px;
+  width: 56px;
+  box-sizing: border-box;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    rgba(39, 174, 96, 0) 0deg,
+    rgba(31, 144, 255, 0) 0.04deg,
+    #1f90ff 360deg
+  );
+  border-radius: 56px;
+ 
+  animation: 1s rotate infinite linear;
+ 
+  margin-top:1%;
+}
+
+.commentLoader::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 40px;
+  width: 40px;
+  
+  background-color: #121212;
+  border-radius: 48px;
+}
+
+.commentLoader::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  width: 8px;
+  background: #1f90ff;
+  border-radius: 8px;
+} */
+
+
+
+.commentLoader {
+  height: 30px; /* Reduced from 56px to 33.6px */
+  width: 30px; /* Reduced from 56px to 33.6px */
+  border-radius: 20px; /* Reduced from 56px to 33.6px */
+  box-sizing: border-box;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    rgba(39, 174, 96, 0) 0deg,
+    rgba(31, 144, 255, 0) 0.04deg,
+    #1f90ff 360deg
+  );
+  animation: 1s rotate infinite linear;
+  margin-top: 0.6%;
+  margin-left:1%;
+}
+
+.commentLoader::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 20px; /* Reduced from 40px to 24px */
+  width: 20px; /* Reduced from 40px to 24px */
+  /* background-color: #121212; */
+  background-color : #2a2929;
+  border-radius: 20px; /* Reduced from 48px to 28.8px */
+}
+
+.commentLoader::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px; /* Reduced from 8px to 4.8px */
+  width: 4px; /* Reduced from 8px to 4.8px */
+  background: #1f90ff;
+  border-radius: 4px;
 }

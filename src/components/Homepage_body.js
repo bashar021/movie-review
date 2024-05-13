@@ -44,6 +44,12 @@ export default function Homepage_body(props) {
         console.log(error)
         console.log('error in adding the review into you watchList ')
       }
+    }else{
+      // alert('please login into your account ')
+      setAlertMessage('log into your account to add into watch list')
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 4000);
     }
   }
   return (
@@ -59,8 +65,9 @@ export default function Homepage_body(props) {
                 <div className='movie_details_box'>
                   <div className='movie_ref_box'>
                     {/* movieTmdbReference */}
-                    <img title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
-                    <img title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
+                    <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
+                    <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
+
                   </div>
                   <p>{item.movieName}</p>
                   <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
@@ -76,13 +83,13 @@ export default function Homepage_body(props) {
 
 
                 </div>
-                <button title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
+                <button className='cursor-pointer' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
               </div>
 
               <div className='movie_review_box_child2'>
                 <div>
                   <span>{item.userName}</span>
-                  <span onClick={() => { setOpenComment(item._id) }}>Comment</span>
+                  <span className='cursor-pointer' onClick={() => { setOpenComment(item._id) }}>Comment</span>
                 </div>
                 <span>{DateFormat(item.date)}</span>
               </div>

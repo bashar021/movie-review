@@ -82,12 +82,20 @@
   cursor: pointer;
   padding-left: 15px;
   padding-right: 15px;
+  color:white;
+  text-decoration: none;
 
 }
+
 
 .userOptionDropdown ul li:hover {
   background-color: #181818;
 }
+
+
+
+
+
 
 
 

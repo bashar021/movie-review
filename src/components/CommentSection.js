@@ -16,6 +16,7 @@ export default function CommentSection(props) {
     const [replyOnCommentArea, setReplyOnCommentArea] = useState('')
     const [replyOnCommentInputValue, setReplyOnCommentInputValue] = useState('')
     const [updateComment,setUpdateComment] = useState(false)
+    const [loader,setLoader] = useState(false)
     // const commentOpenOnPos = window.pageYOffset || document.documentElement.scrollTop;
     async function fetchReviewComments() {
         // console.log('fetching comments for :', props.reviewId)
@@ -30,6 +31,7 @@ export default function CommentSection(props) {
 
     }
     async function uploadReviewComments() {
+        setLoader(true)
         const data = { reviewId: props.reviewId, comment: userComment }
         const updatedComment = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/add`, data, Cookies.get('jwt'))
         const jsonData = await updatedComment.json()
@@ -40,9 +42,11 @@ export default function CommentSection(props) {
         } else {
             console.log('comment not done ')
         }
+        setLoader(false)
 
     }
     async function replyOnComment() {
+        setLoader(true)
         const data = { reviewId: props.reviewId, commentId: replyOnCommentArea, comment: replyOnCommentInputValue }
         const repliedReview = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply`, data, Cookies.get('jwt'))
         const jsonData = await repliedReview.json()
@@ -56,6 +60,7 @@ export default function CommentSection(props) {
         } else {
             console.log('can not reply to the comment')
         }
+        setLoader(false)
         // console.log(data)
 
     }
@@ -144,6 +149,7 @@ export default function CommentSection(props) {
 
     }
     async function handleUpdateCommentButton(commentId){
+        setLoader(true)
         const data = await updateCommentDescription(reviewComments,commentId,replyOnCommentInputValue)
         if(data){
             setReviewComments([...data])
@@ -151,6 +157,7 @@ export default function CommentSection(props) {
             setUpdateComment(false)
             setReplyOnCommentArea('')
         }
+        setLoader(false)
         
 
     }
@@ -200,13 +207,15 @@ export default function CommentSection(props) {
                         </div>
                         <p>{dateFormat(item.date)}</p>
                     </div>
+
                     {replyOnCommentArea === item._id ?
                         <div className='addCommentBox'>
                             <img src={userAvatar} alt='user' />
                             <form>
-                                <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => { setReplyOnCommentInputValue(event.target.value) }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                                <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => {if(Cookies.get('jwt')){ setReplyOnCommentInputValue(event.target.value)}else{alert('for comment you have to login' )} }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
                             </form>
                             {replyOnCommentInputValue !== '' ? (updateComment?<button onClick={()=>{handleUpdateCommentButton(item._id)}}>Update</button>:<button onClick={() => { replyOnComment() }}>Post</button>) : ''}
+                            {loader && replyOnCommentInputValue !== ''?<span className='commentLoader' ></span>:''}
                         </div> : ''
                     }
 
@@ -226,9 +235,10 @@ export default function CommentSection(props) {
             <div className='addCommentBox'>
                 <img src={userAvatar} alt='user' />
                 <form>
-                    <TextareaAutosize value={userComment} onChange={(event) => { setUserComment(event.target.value) }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                    <TextareaAutosize value={userComment} onChange={(event) => { if(Cookies.get('jwt')){setUserComment(event.target.value)}else{alert(' for comment you have to login ')}}} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
                 </form>
                 {userComment !== '' ? <button onClick={() => { uploadReviewComments() }}>Post</button> : ''}
+                {loader && userComment !== ''?<span className='commentLoader'></span>:''}
             </div>
 
             <div className='commentBoxesCont'>

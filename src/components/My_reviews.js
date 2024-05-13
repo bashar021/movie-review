@@ -12,13 +12,19 @@ import Get from '../controllers/Get.js'
 import Cookies from 'js-cookie'
 import { getMovieDetails } from '../controllers/TmdbApi.js'
 import UserNav from './UserNav.js'
+import DeleteConfirmation from './DeleteConfirmation.js'
+import {useNavigate} from 'react-router-dom'
 const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
+
+
+
 
 export default function My_reviews(props) {
   const [myReviewsList, setMyReviewsList] = useState([])
   const [displayMyReviewForm, setDisplayMyReviewForm] = useState(false)
   const [movieList, setMovieList] = useState([])
-  const [loader,setLoader] = useState(false)
+  const [loader, setLoader] = useState(false)
+  const navigate = useNavigate()
   // const movieList = [1, 2, , 3, 4, 4,4,4,4,4,4,4,,4,4]
   const options = [
     'Horror',
@@ -77,8 +83,9 @@ export default function My_reviews(props) {
   const [selectedMovieRating, setSelectedMovieRating] = useState('')
   const [movieReleaseDate, setMovieReleaseDate] = useState('')
   const [movieTmdbReference, setMovieTmdbReference] = useState('')
-
   const [editReviewId, setEditReviewId] = useState('')
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
+  const [deleteConfirmationPopUp, setDeleteConfirmationPopUp] = useState(false)
 
   function selectFormReviewTags(value) {
     setSelectTagOption(value)
@@ -104,6 +111,7 @@ export default function My_reviews(props) {
     setSelectedMovieRating('')
     setMovieReleaseDate('')
     setMovieTmdbReference('')
+    setMovieList([])
   }
   function removeTagFromTagList(index) {
     let option = [...myReviewTags];
@@ -140,35 +148,68 @@ export default function My_reviews(props) {
     }
   }
   async function deleteMyReview(reviewId) {
-    // console.log(reviewId)
-    const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/reviews/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
-    const jsonData = await updatedReviews.json()
-    if (updatedReviews.ok) {
-      // console.log(jsonData.data.ReviewList)
-      setMyReviewsList(jsonData.data.ReviewList)
+    // setDeleteConfirmationPopUp(true)
+    // if (deleteConfirmation) {
+      // console.log(reviewId)
+      setLoader(true)
+      const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/reviews/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
+      const jsonData = await updatedReviews.json()
+      if (updatedReviews.ok) {
+        // console.log(jsonData.data.ReviewList)
+        setMyReviewsList(jsonData.data.ReviewList)
 
-    } else {
-      console.log('unable to delete ')
-    }
+      } else {
+        console.log('unable to delete ')
+      }
+      setLoader(false)
+      // setDeleteConfirmation(false)
+
+    // }
 
   }
+  useEffect(()=>{
+
+  },[deleteConfirmation])
+
   async function fetchMyReviews() {
     setLoader(true)
-    console.log('fetching my reviews funciton ')
-  const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user-reviews`, Cookies.get('jwt'))
-    const jsonData = await myReviews.json()
-    if (myReviews.ok) {
-      console.log('my review data has been fetched ')
-      setLoader(false)
-      // console.log(jsonData.data.ReviewList)
-      setMyReviewsList(jsonData.data.ReviewList)
-    } else {
-      console.log('can not fetch the user revies ')
-      setLoader(false)
+    try{
+      console.log('fetching my reviews funciton ')
+      const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user-reviews`, Cookies.get('jwt'))
+      if (myReviews.status === 200) {
+        const jsonData = await myReviews.json()
+        console.log('my review data has been fetched ')
+        // console.log(jsonData.data.ReviewList)
+        // setLoader(false)
+        setMyReviewsList(jsonData.data.ReviewList)
+      } else {
+        console.log('can not fetch the user revies ')
+        
+      }
+
+    }catch(error){
+      console.log('error in fetching')
+      console.log(error)
     }
+   
+    console.log('nothing found')
+    setLoader(false)
   }
+  useEffect(() => {
+    if(Cookies.get('jwt')){
+      fetchMyReviews()
+    }else{
+      navigate('/401')
+    }
+    
+    
+    // getMovieDetails()
+    // setLoader(false)
+
+  }, [setLoader])
   function editMyReview(review) {
     // console.log(review)
+
     setMyReviewMovieName(review.movieName)
     setMyReviewDownloadLink(review.downloadLink)
     setMyReviewDescription(review.description)
@@ -184,15 +225,9 @@ export default function My_reviews(props) {
     setEditReviewId(review._id)
   }
   async function updateEditedReview() {
-    // const data = { 
-    //   movieName: myReviewMovieName, 
-    //   downloadLink: myReviewDownloadLink, 
-    //   description: myReviewDescription, 
-    //   tags: myReviewTags, 
-    //   reviewId: editReviewId 
-    // }
+    setLoader(true)
     const data = {
-      reviewId: editReviewId ,
+      reviewId: editReviewId,
       myReviewTags: myReviewTags,
       myReviewMovieName: myReviewMovieName,
       myReviewDownloadLink: myReviewDownloadLink,
@@ -215,7 +250,9 @@ export default function My_reviews(props) {
     } else {
       console.log(jsonData.error)
 
+
     }
+    setLoader(false)
 
   }
   async function handleMovieQuery() {
@@ -241,33 +278,32 @@ export default function My_reviews(props) {
     setMovieTmdbReference(movie.tmdbUrl)
 
   }
-  useEffect(() => {
-    fetchMyReviews()
-    // getMovieDetails()
-
-  }, [])
+  
 
   return (
 
     <>
       <UserNav></UserNav>
-      {loader?<div className='loader'></div>:''}
-      
+      {deleteConfirmationPopUp ? <DeleteConfirmation popUp={setDeleteConfirmationPopUp} confirm={setDeleteConfirmation}></DeleteConfirmation> : ''}
+      {/* <DeleteConfirmation></DeleteConfirmation> */}
+
+      {loader ? <div className='loader'></div> : ''}
+
       <div id='myReviewsCont' style={{ color: 'white' }}>
 
         {myReviewsList.map((item, key) => {
           return (
             <div key={key} className='myReviewBoxes'>
               {/* <img className='myReviewBoxesImg' src={spidermanImg} alt={item.movieName} /> */}
-              <img className='myReviewBoxesImg' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage}  alt={item.movieName} />
+              <img className='myReviewBoxesImg' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt={item.movieName} />
               <div className='myReviewBoxesDetailsCont' >
                 <div className='myReviewOptions'>
                   {/* <img src={imdb} alt="" /> */}
-                  <img title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
+                  <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
                   {/* <img src={download_icon} alt="" /> */}
-                  <img title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
-                  <img onClick={() => { editMyReview(item) }} src={edit_icon} alt="edit" />
-                  <img onClick={() => { deleteMyReview(item._id) }} src={delete_icon} alt="delete" />
+                  <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
+                  <img className='cursor-pointer' onClick={() => { editMyReview(item) }} src={edit_icon} alt="edit" />
+                  <img className='cursor-pointer' onClick={() => { deleteMyReview(item._id) }} src={delete_icon} alt="delete" />
                 </div>
 
 
@@ -282,14 +318,14 @@ export default function My_reviews(props) {
                     }
 
                   </div>
-                  <p className='myReviewDiscription'>{item.description.split(' ').slice(0, 30).join(' ')}{item.description.split(' ').length > 40 ? <span  style= {{color:'blue'}} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+                  <p className='myReviewDiscription'>{item.description.split(' ').slice(0, 30).join(' ')}{item.description.split(' ').length > 40 ? <span className='cursor-pointer' style={{ color: 'blue' }} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
                 </div>
               </div>
             </div>)
 
 
         })}
-        <button onClick={() => { setDisplayMyReviewForm(true) }} id='myReviewAddBtn'>Add</button>
+        <button className='cursor-pointer' onClick={() => { setDisplayMyReviewForm(true) }} id='myReviewAddBtn'>&#43;</button>
 
         {
           displayMyReviewForm ?
@@ -305,7 +341,7 @@ export default function My_reviews(props) {
                     {/* {myReviewMovieName !== ''?  */}
                     {movieList.map((item, index) => {
                       return (
-                        <div key={index} onClick={() => { handleMovieSelect(item) }} className="movieBox">
+                        <di v key={index} onClick={() => { handleMovieSelect(item) }} className="movieBox cursor-pointer">
                           <img src={item.moviePosterUrl} alt={item.movieName} />
                           <div>
                             <p><strong>{item.movieName}</strong></p>
@@ -314,7 +350,7 @@ export default function My_reviews(props) {
 
                           </div>
 
-                        </div>
+                        </di>
                       )
                     })}
                     {/* :''} */}
@@ -339,14 +375,14 @@ export default function My_reviews(props) {
                     })
                   }
                 </div>
-                <input className="myReviewFormInput" type="text" value={myReviewDownloadLink} onChange={(event) => { setMyReviewDownloadLink(event.target.value) }} placeholder='Download link'/>
-                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description' required/>
-                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event)=>{setSelectedMovieRating(event.target.value)}} placeholder="Rating" required/>
+                <input className="myReviewFormInput" type="text" value={myReviewDownloadLink} onChange={(event) => { setMyReviewDownloadLink(event.target.value) }} placeholder='Download link' />
+                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description' required />
+                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event) => { setSelectedMovieRating(event.target.value) }} placeholder="Rating" required />
 
                 <div stye={{ display: 'flex' }}>
-                  {editReviewId === '' ? <button className="reviewFormBtn" onClick={() => { saveMyReviewToDB() }} >save</button> : <button className="reviewFormBtn" onClick={() => { updateEditedReview() }} >Update</button>}
+                  {editReviewId === '' ? <button className="reviewFormBtn cursor-pointer" onClick={() => { saveMyReviewToDB() }} >save</button> : <button className="reviewFormBtn cursor-pointer" onClick={() => { updateEditedReview() }} >Update</button>}
 
-                  <button className="reviewFormBtn" onClick={() => { setDisplayMyReviewForm(false); clearMyReviewForm() }} >cancel</button>
+                  <button className="reviewFormBtn cursor-pointer" onClick={() => { setDisplayMyReviewForm(false); clearMyReviewForm() }} >cancel</button>
                 </div>
                 <p style={{ color: 'red' }} >{tagOptionAlert}</p>
               </form>

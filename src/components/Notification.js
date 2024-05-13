@@ -28,7 +28,7 @@ export default function Notification(props) {
         
         <div className={props.showNotification?'notificationTabShow':'notificationTabShow'} ref={notificationRef} id="notificationTab">
             <div id="notificationCont">
-                {props.userNotifications.map((item, key) => {
+                {[...props.userNotifications].reverse().map((item, key) => {
                     return (
                         <div key={key} className='notificationBox'>
                             <p><strong>{item.senderUserName}</strong>

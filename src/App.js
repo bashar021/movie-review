@@ -13,7 +13,7 @@ import Profile_Details from './components/Profile_Details.js'
 import My_reviews from './components/My_reviews.js';
 import Watchlist from './components/Watchlist.js';
 import socketIOClient from 'socket.io-client';
-import { NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
+import { Unauthorized,NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
 
 const ENDPOINT = process.env.REACT_APP_SERVER_URL
 // const socket = socketIOClient.connect(ENDPOINT);
@@ -72,6 +72,7 @@ function App() {
         <Route path='/500' Component={InternalServerError}></Route>
         <Route path='/503' Component={ServiceUnavailable}></Route>
         <Route path='*' Component={NotFoundPage}></Route>
+        <Route path='/401' Component={Unauthorized}></Route>
       </Routes>
 
     </Router>

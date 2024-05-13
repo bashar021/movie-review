@@ -49,15 +49,24 @@
 }
 .watchlist_movie_details_box p{
     padding:0px;
-    margin-top:4%;
+    margin:0px;
+    margin-top: 5px;
     /* background-color: blueviolet; */
 }
 /* .watchlist_movie_details_box p:nth-child(0){
     font-size: 20px;
     color: black;
 } */
+.watchlist_movie_details_box p:nth-child(5){
+    /* color:red; */
+    font-size: 12px;
+}
 
-
+.watchlist_tags_cont{
+    margin-top: 3%;
+    margin-bottom: 3%;
+    font-size: 15px;
+}
 .watchlist_movie_review_box_child2{
     display: flex;
     justify-content: space-between;

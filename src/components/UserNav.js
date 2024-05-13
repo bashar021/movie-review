@@ -34,7 +34,7 @@ export default function UserNav(props) {
             console.log(error)
             console.log(error.message)
             // navigate('/503')
-            alert('unable to load notification')
+            // alert('unable to load notification')
             // navigate('/user/503')
             // redirect("/503");
         }
@@ -69,6 +69,17 @@ export default function UserNav(props) {
         event.preventDefault(); 
         props.search(searchOption,searchQuery)
     };
+    function handleLogout(){
+        Cookies.remove('jwt')
+        Cookies.remove('email')
+        Cookies.remove('userName')
+        
+        // window.location.reload()
+        // navigate('/')
+        window.location.href = '/'
+        // window.href('/')
+
+    }
     
     return (
         <>
@@ -100,10 +111,10 @@ export default function UserNav(props) {
             {userOptionDropdown ?
                 <div className="userOptionDropdown" ref={dropdownRef}>
                     <ul>
-                        <li > <Link to="/user/profile-details">Profile Details</Link></li>
-                        <li > <Link to='/user/reviews'>My Reviews</Link></li>
-                        <li ><Link to='/user/watch list'>WatchList</Link></li>
-                        <li>Logout</li>
+                        <li > <Link style={{color:"white",textDecoration:'none'}} to="/user/profile-details">Profile Details</Link></li>
+                        <li > <Link style={{color:"white",textDecoration:'none'}} to='/user/reviews'>My Reviews</Link></li>
+                        <li ><Link style={{color:"white",textDecoration:'none'}} to='/user/watch list'>WatchList</Link></li>
+                        <li onClick={()=>{handleLogout()}} >Logout</li>
                     </ul>
                 </div> : ''
 

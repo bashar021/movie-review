@@ -1,0 +1,72 @@
+.deleteConfirmationBox{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.093);
+    /* opacity: 0.5; */
+    width: 99.8vw;
+    z-index: 12;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:0px;
+
+    
+
+}
+.deleteConfirmationBox div{
+    background-color: rgba(0, 0, 0, 0.927);
+    width: fit-content;
+    text-align:center;
+    padding:5% 8% 5% 8%;
+    color:white;
+}
+.deleteConfirmationBox div p{
+    text-align: center;
+    background-color: transparent;
+    width:100px;
+    height:100px;
+    margin:auto;
+    padding:0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-style:solid;
+    border-color: red;
+}
+.deleteConfirmationBox div p span{
+    color:red;
+    font-size:50px;
+    /* border-style:solid; */
+    /* min-width: 100px; */
+    /* height:100px */
+    /* background-color: blue; */
+    margin:0px;
+}
+#confirmDeleteBtn{
+    background-color: #333; /* Dark background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  margin-right: 5px;
+}
+#confirmDeleteBtn:hover {
+    background-color: #555; /* Darker background color on hover */
+  }
+
+ #cancelDeleteBtn{
+    background-color: blue;
+    color: #fff; /* White text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  margin-right: 5px;
+ } 
+ #cancelDeleteBtn:hover{
+    background-color: rgb(2, 2, 201);
+ }

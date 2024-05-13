@@ -166,12 +166,24 @@
     background-color: rgb(206, 202, 202);
 }
 #myReviewAddBtn{
-    position: absolute;
-    padding: 2%;
+    position: fixed;
+    /* padding: 2%; */
     border-radius: 50%;
     bottom: 5px;
     right: 5px;
-    transition: 2sec;border-style: none;
+    transition: 2sec;
+    border-style: none;
+    font-size: 50px;
+    /* padding: 5px 10px 5px 10px; */
+    padding:auto;
+    /* padding-bottom: 10px; */
+    width: 4vw;
+    height: 4vw;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+
 
 }
 #myReviewAddBtn:hover{

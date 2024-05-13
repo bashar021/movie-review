@@ -6,6 +6,7 @@ import Post from '../controllers/Post.js'
 import Cookies from 'js-cookie';
 import UserNav from './UserNav.js'
 import Get from '../controllers/Get.js'
+import {useNavigate} from 'react-router-dom'
 const Profile = (props) => {
   const [userName, setUserName] = useState('')
   const [editUserName, setEditUserName] = useState(true)
@@ -20,8 +21,17 @@ const Profile = (props) => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [saveDetailsBtn, setSaveDetailsBtn] = useState(true)
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    if(Cookies.get('jwt')){
+      fetchUserData()
+    }else{
+      navigate('/401')
+    }
+    
 
+  }, [])
   const updateNewPassword = function () {
 
   }
@@ -52,10 +62,7 @@ const Profile = (props) => {
       console.log(jsonData.error)
     }
   }
-  useEffect(() => {
-    fetchUserData()
-
-  }, [])
+  
 
   function closeDetailsEditOption() {
     setEditUserName(true)

@@ -20,9 +20,11 @@ export default function LoginSignup(props) {
     const [password,setPassword] = useState('');
     const [confirmPass,setConfirmPass] =  useState('')
     const [serverMessage,setServerMessage] = useState('')
+    const [loader,setLoader]  = useState(false)
    
     const navigate = useNavigate();
     async function handleSignUP(){
+        setLoader(true)
         const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/signup`,{name:name,userName:userName,email:email,phone:phone,password:password})
         // navigate('/user')
         // 201 status code for the sucess creation of the user account 
@@ -43,9 +45,11 @@ export default function LoginSignup(props) {
             setServerMessage(jsonData.error)
 
         }
+        setLoader(false)
     }
     
     async function handleLogin(){
+        setLoader(true)
         const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/login`,{email:email,password:password})
         const jsonData  = await data.json()
         if(data.ok){ 
@@ -65,6 +69,7 @@ export default function LoginSignup(props) {
             console.log(jsonData.error)
             setServerMessage(jsonData.error)
         }
+        setLoader(false)
         // navigate('/user')
         // console.log('login')
     }
@@ -86,7 +91,11 @@ export default function LoginSignup(props) {
     return (
         <>
             <div id='loginSignupCont' style={{ backgroundImage: `url(${bg})` }}>
-                <div className='loginSignupBox'>
+                
+                <div style={{paddingTop:'20px'}} className='loginSignupBox'>
+
+                {loader?<div  className='loader'></div>:''}
+
                     <div>
                         <h2>Movies Reviews</h2>
                         <button className={loginForm ? 'loginActive' : 'loginInActive'} onClick={() => { setSignupForm(false);setLoginForm(true) }}>Login</button>

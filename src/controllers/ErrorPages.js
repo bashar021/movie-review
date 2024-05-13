@@ -23,3 +23,6 @@ export function InternalServerError(){
     return <h1 style={{color:'white'}}>500 -  Internal Server Errorr</h1>
 
 }
+export function Unauthorized(){
+    return <h1 style={{color:'white'}}>401 -  Unauthorized page</h1>
+}

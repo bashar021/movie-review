@@ -341,16 +341,15 @@ export default function My_reviews(props) {
                     {/* {myReviewMovieName !== ''?  */}
                     {movieList.map((item, index) => {
                       return (
-                        <di v key={index} onClick={() => { handleMovieSelect(item) }} className="movieBox cursor-pointer">
+                        <div key={index} onClick={() => { handleMovieSelect(item) }} className="movieBox cursor-pointer">
                           <img src={item.moviePosterUrl} alt={item.movieName} />
-                          <div>
+                          <div className='queryMovieDetailBox'>
                             <p><strong>{item.movieName}</strong></p>
                             <p> <span>{item.movieRating.toFixed(1)}</span>   <span>{item.movieReleaseDate}</span></p>
                             <p>{item.movieDescription}</p>
-
                           </div>
 
-                        </di>
+                        </div>
                       )
                     })}
                     {/* :''} */}
@@ -376,8 +375,8 @@ export default function My_reviews(props) {
                   }
                 </div>
                 <input className="myReviewFormInput" type="text" value={myReviewDownloadLink} onChange={(event) => { setMyReviewDownloadLink(event.target.value) }} placeholder='Download link' />
-                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description' required />
-                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event) => { setSelectedMovieRating(event.target.value) }} placeholder="Rating" required />
+                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description'/>
+                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event) => { setSelectedMovieRating(event.target.value) }} placeholder="Rating"/>
 
                 <div stye={{ display: 'flex' }}>
                   {editReviewId === '' ? <button className="reviewFormBtn cursor-pointer" onClick={() => { saveMyReviewToDB() }} >save</button> : <button className="reviewFormBtn cursor-pointer" onClick={() => { updateEditedReview() }} >Update</button>}

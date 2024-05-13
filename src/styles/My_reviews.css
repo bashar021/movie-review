@@ -293,7 +293,7 @@
     /* position:absolute; */
     opacity: 0.5;
 }
-.movieBox div{
+.queryMovieDetailBox{
     position:absolute;
     top:0px;
 
@@ -301,22 +301,26 @@
     margin:1%
     
 }
-.movieBox div p{
+.queryMovieDetailBox p{
     /* position:absolute; */
     /* top:0px; */
 
     padding:0px;
     margin:1%;
     font-size:15px;
+    /* background-color: red; */
     
 }
-.movieBox div p strong{
+.queryMovieDetailBox p strong{
     font-size: 20px;
 }
-.movieBox div p span{
+.queryMovieDetailBox p span{
     font-size :20px;
     padding-right: 15px;
 
+
+}
+.queryMovieDetailBox{
 
 }
 

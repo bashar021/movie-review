@@ -1,0 +1,214 @@
+.addCommentBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    /* background-color: bisque; */
+    /* margin-left: 5%; */
+    /* justify-content: center; */
+    align-items:flex-start;
+    padding-top: 1%;
+    flex-wrap: wrap;
+    padding-left: 0.5%;
+}
+.addCommentBox img{
+    /* background-color: aqua; */
+    margin: 0px;
+    padding: 0px;
+    width:35px;
+
+}
+.addCommentBox form{
+    /* background-color: rgb(255, 255, 255); */
+    background-color: rgba(138, 135, 135, 0.415);
+    width: 95%;
+    margin-left: 1%;
+    /* border-color: ; */
+    border-radius: 20px;
+    /* padding-left: 3%; */
+    display: flex;
+    justify-content: center;
+    /* margin: 0px; */
+    /* margin-top: 0.7%; */
+    
+
+}
+.commentTextArea{
+    width: 95%;
+    margin: auto;
+    font-size: 18px;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    background-color: transparent;
+    border-style: none;
+    outline: none;
+    color: white;
+
+}
+.commentTextArea::placeholder{
+    color: rgb(214, 211, 211);
+}
+.addCommentBox button{
+    /* display: block; */
+    /* flex-basis: 100%; */
+    margin-left: 5%;
+    margin-top: 1%;
+    border-radius: 10px;
+    padding: 2px 10px 2px 10px;
+    background-color: white;
+    color: black;
+    border-color:transparent;
+    cursor: pointer;
+}
+.addCommentBox button:hover{
+    background-color: rgb(236, 235, 235);
+}
+
+.commentBox{
+    /* background-color: aqua; */
+    padding-left: 0.5%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+
+}
+.commentDetailsBox{
+    /* background-color: red; */
+    width: 100%;
+}
+.commentDetailsBoxChild1{
+    /* background-color: red; */
+    background-color: rgba(136, 133, 133, 0.544);
+    /* width: 100%; */
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding-left: 2%;
+    color: rgb(255, 255, 255);
+    padding-top: 0.5%;
+    padding-bottom: 1%;
+    position: relative;
+    
+}
+.commentDetailsBoxChild1 p{
+    margin:0px;
+    padding:0px;
+}
+.commentDetailsBoxChild1 p:nth-child(2){
+    font-size: 15px;
+}
+.commentDetailsBoxChild2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0% 2% 0 2%;
+    /* background-color: antiquewhite; */
+    /* padding-top: 0px; */
+    /* padding-bottom: 0px; */
+    /* height: auto; */
+}
+.commentDetailsBoxChild2 button{
+    background-color: transparent;
+    /* margin-left: 2%; */
+    border-style: none;
+    cursor: pointer;
+    color: white;
+    /* background-color: blueviolet; */
+}
+.commentDetailsBoxChild2 p{
+    padding:0px;
+    margin: 0px;
+
+}
+
+.editCommentOptionCont{
+    /* background-color: aqua; */
+    position: absolute;
+    width: fit-content;
+    right: 0px;
+    top: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content:right;
+    align-items:end;
+    width: 15%;
+}
+.editCommentOptionContBtn{
+    font-size: 20px;
+    padding: 0px;
+    margin: 0px;
+    width: fit-content;
+    border-style: none;
+    outline: none;
+    color: white;
+    /* float:right */
+    background-color: transparent;
+    cursor: pointer;
+
+}
+.editCommentOptionContBtn:hover{
+    color: rgb(235, 235, 235);
+    /* display: block; */
+
+}
+.editCommentOptions{
+    background-color: rgb(128, 127, 127);
+    /* height: fit-content; */
+    margin-right: 20px;
+    /* margin-top: 20px; */
+    /* padding: 20%; */
+    width: 100%;
+    /* min-width: 50%; */
+    /* display: none; */
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.editCommentOptions p{
+   /* width: 20px; */
+   background-color:transparent;
+   cursor: pointer;
+   padding-top: 2%;
+   padding-bottom: 2%;
+   /* width:100% */
+}
+.editCommentOptions:hover{
+    display: block;
+}
+.editCommentOptions p:hover{
+    /* background-color: ; */
+    background-color: rgb(185, 185, 185);
+
+}
+
+.addedToWatchListMessageBox{
+    position: fixed;
+    z-index: 10;
+    background-color:rgb(15, 14, 14);
+    padding: 0 2% 5px 2%;
+    bottom: 10%;
+    /* top:; */
+    left: 50%;
+    /* top:50%; */
+    transform:translate(-50%);
+    border-radius: 25px;
+}
+
+.addedToWatchListMessageBox p {
+    padding: 0px;
+    margin:0px;
+    font-size: 20px;
+    color: rgb(39, 173, 2);
+}
+
+
+
+.searchQueryAlert{
+    margin:auto;
+    /* background-color: red; */
+    font-size: 25px;
+    padding-left: 10%;
+}

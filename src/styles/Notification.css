@@ -1,0 +1,53 @@
+#notificationTab{
+    /* background-color: rgba(150, 150, 150, 0.456); */
+    background-color: rgba(246, 246, 246, 0.372); /* Semi-transparent white */
+    backdrop-filter: blur(8px); /* Apply blur effect */
+    /* width: 25%; */
+    position:fixed;
+    top: 0px;
+    right: 0px;
+    /* transition: 3sec; */
+    transition: all 0.5s ease-in-out; /* Smooth transition */
+    /* height: 100%; */
+    overflow-y: scroll;
+    height: 100vh;
+    cursor: pointer;
+    z-index: 10;
+    /* filter: blur(50%); */
+}
+.notificationTabShow{
+    width: 25%;
+}
+.notificationTabHide{
+    width: 0px;
+}
+#notificationTab::-webkit-scrollbar {
+    display: none;
+  }
+#notificationCont{
+    /* background-color: red; */
+    overflow: auto;
+    padding-top: 5%;
+}
+.notificationBox{
+    background-color:transparent;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    color: rgb(219, 219, 219);
+    z-index: -2;
+}
+.notificationBox:hover{
+    /* background-color: red; */
+    background-color: rgba(64, 63, 63, 0.781);
+}
+.notificationBox p{
+    color:black;
+}
+.notificationBox p strong{
+    /* color:white; */
+    color:black;
+    padding-left: 5%;
+    padding-right: 5%;
+}

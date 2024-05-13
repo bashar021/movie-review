@@ -26,3 +26,10 @@
     color: white;
     
 }
+#homeBtn{
+    padding:0px;
+    border-style: none;
+    outline:none;
+    background-color: transparent;
+    cursor: pointer;
+}

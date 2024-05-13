@@ -50,3 +50,236 @@
 .myReviewDiscription{
     text-align: justify;
 }
+
+
+#my_review_adding_form{
+    position: absolute;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.33);
+    left: 0px;
+    right: 0px;
+    height: 100%;
+}
+#my_review_adding_form form{
+    background-color: rgba(115, 115, 115, 0.338);
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin:auto;
+    padding: 5%;
+    margin-top: 10vh;
+    font-size: 20px;
+
+}
+
+.myReviewFormInput{
+    padding: 2%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.624);
+    font-size: 20px;
+    padding-left: 4%;
+    border-radius: 20px;
+    margin-top: 4%;
+    border-color: transparent;
+}
+.my_review_tags_cont{
+    margin-top: 2%;
+    /* background-color: aqua; */
+    width: 100%;
+    /* overflow-wrap: break-word; */
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+    
+}
+.my_review_tags_cont span{
+    /* padding: 2%; */
+    padding: 0 2% 1% 2%;
+    /* border-color: white; */
+    border-style: solid;
+    border-color: white;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-width: 1px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.624);
+    margin-top: 2%;
+    cursor: pointer;
+    position: relative;
+}
+.my_review_tags_cont span:hover{
+    /* opacity: 0.5; */
+    /* content: 'hii'; */
+}
+.my_review_tags_cont span span{
+    /* display: ; */
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 95%;
+    border-style: none;
+    text-align: center;
+    align-items: center;
+
+}
+.reviewFormBtn{
+    width:fit-content;
+    font-size: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2% 4% 2% 4%;
+    /* display: inline-block; */
+    margin-top: 4%;
+    border-style: none;
+    margin-left: 2%;
+    /* color:red */
+
+
+}
+.reviewFormBtn:hover{
+    background-color: rgb(206, 202, 202);
+}
+#myReviewAddBtn{
+    position: absolute;
+    padding: 2%;
+    border-radius: 50%;
+    bottom: 5px;
+    right: 5px;
+    transition: 2sec;border-style: none;
+
+}
+#myReviewAddBtn:hover{
+    background-color: grey;
+}
+.movieSearchBox{
+   
+
+
+
+    padding: 0px;
+    color: white;
+    /* background-color: rgba(255, 255, 255, 0.624); */
+    /* background-color: transparent; */
+    font-size: 20px;
+    /* padding-left: 4%; */
+    border-radius: 20px;
+    margin-top: 4%;
+    /* border-color: transparent; */
+    /* background-color:white; */
+    /* display: ab; */
+    /* position:absolute; */
+    /* display: relative; */
+    position:relative;
+    /* height: 10%; */
+
+    /* border-style: solid; */
+    border-width: 2px;
+    background-color: rgba(0, 0, 0, 0.624);
+    
+    
+}
+.movieSearchBox div:nth-child(1){
+    /* background-color: aquamarine; */
+    width: 100%;
+    position: relative;
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center;
+
+}
+.movieSearchBtn{
+    position: absolute;
+    font-size:18px;
+    /* float:right; */
+    right: 5px;
+    height: 80%;
+    margin-right: 0px;
+    border-style: none;
+    outline: none;
+    cursor:pointer;
+    background-color: transparent;
+    border-left: solid;
+    border-color: rgb(133, 132, 132);
+    border-width: 2px;
+    width: 40px;
+    transition: font-size 0.01s;
+
+        /* background-color:transparent; */
+
+
+}
+.movieSearchBtn:hover{
+    font-size: 22px;
+}
+
+.movieSearchBox input{
+    /* background-color: white; */
+    margin-top:0px ;
+    width:100% ;
+    padding-right: 15%;
+    /* border-radius: 0px; */
+
+}
+.movieQueryListBox{
+
+    /* background-color: aqua; */
+    width: 90%;
+    margin:auto;
+    /* position:absolute; */
+    /* left:50%; */
+    /* transform: translate(-50%); */
+    /* height: 200px; */
+    height:auto;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.movieQueryListBox::-webkit-scrollbar{
+    display: none;
+}
+.movieBox{
+    /* background-color: rgba(29, 28, 28, 0.992); */
+    background-color:rgb(83, 178, 20)y;
+    font-size: 12px;
+    width:90%;
+    margin:auto;
+    margin-top: 2%;
+    border-radius: 10px;
+    padding-left: 2%;
+    position:relative;
+
+}
+.movieBox img{
+    width:100%;
+    margin: 0px;
+    padding:0px;
+    /* position:absolute; */
+    opacity: 0.5;
+}
+.movieBox div{
+    position:absolute;
+    top:0px;
+
+    padding:0px;
+    margin:1%
+    
+}
+.movieBox div p{
+    /* position:absolute; */
+    /* top:0px; */
+
+    padding:0px;
+    margin:1%;
+    font-size:15px;
+    
+}
+.movieBox div p strong{
+    font-size: 20px;
+}
+.movieBox div p span{
+    font-size :20px;
+    padding-right: 15px;
+
+
+}
+

@@ -12,6 +12,8 @@ import Cookies from 'js-cookie'
 import deleteIcon from '../icons/delete-icon.png'
 import UserNav from './UserNav.js'
 import dateFormat from '../controllers/ConvertDate.js'
+import findMatches from '../controllers/FindMatchesReview.js'
+import DeleteConfirmation from './DeleteConfirmation.js'
 // import Cookies from 'js-cookie'
 // 
 // import Cookies from 'js-cookie'
@@ -21,7 +23,19 @@ export default function Watchlist() {
   const [userWatchLists, setUserWatchLists] = useState([])
   const [loader,setLoader] = useState(false)
   const navigate = useNavigate()
+  const [searchAlert,setSearchAlert] = useState('')
+  const [deleteConfirmationPopUp,setDeleteConfirmationPopUp] = useState('')
 
+  useEffect(() => {
+    if(Cookies.get('jwt')){
+      fetchWatchListFromDB()
+    }else{
+      // alert('please login to your account')
+      navigate('/401')
+      // window.location.href = '/401'
+    }
+    
+  }, [])
   async function fetchWatchListFromDB() {
     setLoader(true)
     try {
@@ -29,8 +43,10 @@ export default function Watchlist() {
       if (watchListReviews.ok) {
         const jsonData = await watchListReviews.json()
         console.log('watch list has been fetched ')
-        console.log(jsonData.data)
-        setUserWatchLists(jsonData.data)
+        // console.log(jsonData.data)
+        const modifiedWatchList = jsonData.data.map((item)=>{return item.reviewObject;})
+        setUserWatchLists(modifiedWatchList)
+        // console.log(modifiedWatchList)
       } else {
         console.log('unable to fetch reviews list')
       }
@@ -51,7 +67,7 @@ export default function Watchlist() {
       if (updatedWatchList.status === 201) {
         const jsonData = await updatedWatchList.json()
         console.log('review removed ')
-        console.log(updatedWatchList)
+        // console.log(updatedWatchList)
         fetchWatchListFromDB()
       } else if (updatedWatchList.status === 204) {
         console.log('unable to delete please try again')
@@ -66,20 +82,41 @@ export default function Watchlist() {
       setLoader(false)
     }
   }
-
-  useEffect(() => {
-    if(Cookies.get('jwt')){
-      fetchWatchListFromDB()
+  function handleSearchReviewInWatchList(by,value){
+    console.log(by,value)
+    const matches = findMatches(userWatchLists,value,by)
+    if(matches.length>0){
+      setUserWatchLists([...matches])
     }else{
-      // alert('please login to your account')
-      navigate('/401')
+      setSearchAlert('No Result Found :')
     }
-    
-  }, [])
+
+  }
+  function cancelSearchReviewInWatchList(){
+    fetchWatchListFromDB()
+    setSearchAlert('')
+
+
+  }
+  function handleDeleteConfirmation(confirm){
+    if(confirm){
+      console.log('deleted')
+      deleteReviewFromWatchList(deleteConfirmationPopUp)
+    }else{
+      console.log('cancer the deletion ')
+    }
+    setDeleteConfirmationPopUp('')
+  }
+
+  
   return (
     <>
-      <UserNav></UserNav>
+      <UserNav search={handleSearchReviewInWatchList} cancelSearch={cancelSearchReviewInWatchList}></UserNav>
+      {searchAlert?<div className='no-result-found' >{searchAlert} </div>:''}
       {loader? <div className="loader"></div>:''}
+      {deleteConfirmationPopUp !== ''?<DeleteConfirmation confirm={handleDeleteConfirmation}></DeleteConfirmation>:''}
+      
+      
      
       <div id="user_watchlist">
         {
@@ -88,37 +125,37 @@ export default function Watchlist() {
               <div key={index} className="watchlist_const">
                 <div className='watchlist_movie_review_box'>
 
-                  <img src={item.reviewObject.moviePosterUrl} alt={item.reviewObject.movieName} height='200px' />
+                  <img src={item.moviePosterUrl} alt={item.movieName} height='200px' />
 
 
 
                   <div className='watchlist_movie_details_box'>
                     <div className='movie_ref_box'>
-                      <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.reviewObject.movieTmdbReference, '_blank') }} alt="imdb" />
-                      <img className='cursor-pointer' title='download' onClick={() => { window.open(item.reviewObject.downloadLink, '_blank') }} src={download_icon} alt="download" />
+                      <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
+                      <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
                     </div>
 
-                    <p>{item.reviewObject.movieName}</p>
-                    <p>{parseFloat(item.reviewObject.movieRating).toFixed(1)}  <span>{item.reviewObject.movieReleaseDate} </span></p>
+                    <p>{item.movieName}</p>
+                    <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
                     <div className='watchlist_tags_cont'>
-                      {item.reviewObject.tags.map((item, index) => {
+                      {item.tags.map((item, index) => {
                         return <span key={index}>{item}</span>
                       })}
                     </div>
                     {/* <p>{item.reviewObject.description}</p> */}
-                    <p>{item.reviewObject.description.split(' ').slice(0, 35).join(' ')} {item.reviewObject.description.split(' ').length > 45 ? <span className='cursor-pointer' style={{color:'blue'}} onClick={() => { window.open(item.reviewObject.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+                    <p>{item.description.split(' ').slice(0, 35).join(' ')} {item.description.split(' ').length > 45 ? <span className='cursor-pointer' style={{color:'blue'}} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
                   </div>
 
-                  <button className='cursor-pointer' onClick={() => { deleteReviewFromWatchList(item.reviewObject._id) }}><img src={deleteIcon} alt="save" /></button>
+                  <button className='cursor-pointer' onClick={() => { setDeleteConfirmationPopUp(item._id) }}><img src={deleteIcon} alt="save" /></button>
                 </div>
 
                 <div className='watchlist_movie_review_box_child2'>
                   <div>
-                    <span>{item.reviewObject.userName}</span>
+                    <span>{item.userName}</span>
                     <span>Comment</span>
                   </div>
 
-                  <span>{dateFormat(item.reviewObject.date)}</span>
+                  <span>{dateFormat(item.date)}</span>
                 </div>
 
               </div>

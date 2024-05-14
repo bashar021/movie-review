@@ -25,50 +25,65 @@ export default function LoginSignup(props) {
     const navigate = useNavigate();
     async function handleSignUP(){
         setLoader(true)
-        const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/signup`,{name:name,userName:userName,email:email,phone:phone,password:password})
-        // navigate('/user')
-        // 201 status code for the sucess creation of the user account 
-        const jsonData  = await data.json()
-        if(data.ok){ 
-            // console.log(jsonData)
-            console.log('user has been created in the server ')
-            // console.log(jsonData.data.email)
-            // props.setUserDetails(jsonData)
-            // const authToken = Cookies.get('jwt');
-            Cookies.set('jwt',jsonData.jwt, { expires: 7 })
-            console.log(Cookies.get('jwt'))
-            Cookies.set('email',jsonData.data.email, { expires: 7 })
-            Cookies.set('userName',jsonData.data.userName,{ expires: 7 })
-            navigate('/user')
-        }else{
-            console.log(jsonData.error)
-            setServerMessage(jsonData.error)
+        try{
+            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/signup`,{name:name,userName:userName,email:email,phone:phone,password:password})
+            // navigate('/user')
+            // 201 status code for the sucess creation of the user account 
+            const jsonData  = await data.json()
+            if(data.ok){ 
+                // console.log(jsonData)
+                console.log('user has been created in the server ')
+                // console.log(jsonData.data.email)
+                // props.setUserDetails(jsonData)
+                // const authToken = Cookies.get('jwt');
+                Cookies.set('jwt',jsonData.jwt, { expires: 7 })
+                console.log(Cookies.get('jwt'))
+                Cookies.set('email',jsonData.data.email, { expires: 7 })
+                Cookies.set('userName',jsonData.data.userName,{ expires: 7 })
+                navigate('/user')
+            }else{
+                console.log(jsonData.error)
+                setServerMessage(jsonData.error)
+    
+            }
 
+        }catch(error){
+            console.log(error)
+            navigate('/404')
         }
+       
         setLoader(false)
     }
     
     async function handleLogin(){
+
         setLoader(true)
-        const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/login`,{email:email,password:password})
-        const jsonData  = await data.json()
-        if(data.ok){ 
-            // console.log(jsonData)
-            // console.log(jsonData.data.email)
-            // props.setUserDetails(jsonData)
+        try{
+            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/login`,{email:email,password:password})
+            const jsonData  = await data.json()
+            if(data.ok){ 
+                // console.log(jsonData)
+                // console.log(jsonData.data.email)
+                // props.setUserDetails(jsonData)
+    
+                console.log('user has logged in ')
+                // const authToken = Cookies.get('jwt');
+                Cookies.set('jwt',jsonData.jwt, { expires: 7 })
+                console.log(Cookies.get('jwt'))
+                Cookies.set('email',jsonData.data.email, { expires: 7 })
+                Cookies.set('userName',jsonData.data.userName,{ expires: 7 })
+    
+                navigate('/user')
+            }else{
+                console.log(jsonData.error)
+                setServerMessage(jsonData.error)
+            }
+        }catch(error){
+            console.log(error)
+            navigate('/404')
 
-            console.log('user has logged in ')
-            // const authToken = Cookies.get('jwt');
-            Cookies.set('jwt',jsonData.jwt, { expires: 7 })
-            console.log(Cookies.get('jwt'))
-            Cookies.set('email',jsonData.data.email, { expires: 7 })
-            Cookies.set('userName',jsonData.data.userName,{ expires: 7 })
-
-            navigate('/user')
-        }else{
-            console.log(jsonData.error)
-            setServerMessage(jsonData.error)
         }
+       
         setLoader(false)
         // navigate('/user')
         // console.log('login')

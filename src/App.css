@@ -1,7 +1,12 @@
 .cursor-pointer{
   cursor: pointer;
 }
-
+.no-result-found{
+  color:white;
+  margin-left:5%;
+  font-size: 25px;
+  margin-top:2%;
+}
 
 
 

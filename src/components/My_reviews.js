@@ -14,7 +14,10 @@ import { getMovieDetails } from '../controllers/TmdbApi.js'
 import UserNav from './UserNav.js'
 import DeleteConfirmation from './DeleteConfirmation.js'
 import {useNavigate} from 'react-router-dom'
+import findMatches from '../controllers/FindMatchesReview.js'
+import genreList from '../Modules/GenreOptionsList.js'
 const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
+
 
 
 
@@ -26,52 +29,7 @@ export default function My_reviews(props) {
   const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
   // const movieList = [1, 2, , 3, 4, 4,4,4,4,4,4,4,,4,4]
-  const options = [
-    'Horror',
-    'Action',
-    'Thriller',
-    'Western',
-    'Comedy',
-    'Adventure',
-    'Historical drama',
-    'Drama',
-    'Fantasy',
-    'Romantic comedy',
-    'Humor',
-    'Science fiction',
-    'Satire',
-    'Fiction',
-    'Mystery',
-    'Narrative',
-    'Slapstick',
-    'Dark comedy',
-    'Romance',
-    'Film criticism',
-    'History',
-    'Historical Fiction',
-    'Farce',
-    'Adventure fiction',
-    'Adventure',
-    'Espionage',
-    'Melodrama',
-    'Suspense',
-    'Hybrid genre',
-    'Fairy tale',
-    'Fantasy',
-    'Coming-of-age story',
-    'Magical Realism',
-    'High fantasy',
-    'Mystery',
-    'Comedy horror',
-    'Superhero fiction',
-    'Tragedy',
-    'Screenplay',
-    'Review',
-    'Biography',
-    'Police procedural',
-    'Detective fiction',
-    "other"
-  ];
+  
   const [myReviewTags, setMyReviewTags] = useState([])
   const [selectTagOption, setSelectTagOption] = useState('')
   const [tagOptionAlert, setTagOptionAlert] = useState('')
@@ -84,8 +42,11 @@ export default function My_reviews(props) {
   const [movieReleaseDate, setMovieReleaseDate] = useState('')
   const [movieTmdbReference, setMovieTmdbReference] = useState('')
   const [editReviewId, setEditReviewId] = useState('')
-  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
-  const [deleteConfirmationPopUp, setDeleteConfirmationPopUp] = useState(false)
+  // const [deleteConfirmation, setDeleteConfirmation] = useState(false)
+  const [deleteConfirmationPopUp, setDeleteConfirmationPopUp] = useState('')
+  const [searchAlert,setSearchAlert] = useState('')
+  const [movieSearchAlert,setMovieSearchAlert] = useState('')
+  const [movieLoader,setMovieLoader] = useState(false)
 
   function selectFormReviewTags(value) {
     setSelectTagOption(value)
@@ -112,6 +73,7 @@ export default function My_reviews(props) {
     setMovieReleaseDate('')
     setMovieTmdbReference('')
     setMovieList([])
+    setMovieSearchAlert('')
   }
   function removeTagFromTagList(index) {
     let option = [...myReviewTags];
@@ -256,17 +218,24 @@ export default function My_reviews(props) {
 
   }
   async function handleMovieQuery() {
+    setMovieLoader(true)
     if (myReviewMovieName !== '') {
       const data = await getMovieDetails(myReviewMovieName)
       if (data !== null) {
         console.log(data)
         setMovieList([...data])
+        setMovieSearchAlert(`${data.length} Movie Found Related To your search:`)
+
       } else {
+        setMovieList([])
         console.log('no movie found')
+        setMovieSearchAlert('No Movie Found :')
       }
 
 
     }
+    setMovieLoader(false)
+
   }
   function handleMovieSelect(movie) {
     setMovieList([])
@@ -276,16 +245,49 @@ export default function My_reviews(props) {
     setMyReviewDescription(movie.movieDescription)
     setMovieReleaseDate(movie.movieReleaseDate)
     setMovieTmdbReference(movie.tmdbUrl)
+    setMovieSearchAlert('')
+    
 
+
+  }
+  function searchReviewInMyReviewList(option,query){
+    console.log(option,query)
+    const matches =  findMatches(myReviewsList,query,option)
+    if(matches.length>0){
+      setSearchAlert('')
+      setMyReviewsList([...matches])
+    }else{
+      setSearchAlert('No Result Found :')
+    }
+    console.log(matches)
+  }
+  function deleteConfirmation(value){
+    if(value){
+      console.log(value,'for deletion')
+      deleteMyReview(deleteConfirmationPopUp)
+      setDeleteConfirmationPopUp('')
+    }else{
+      console.log(value,'for deletion')
+      setDeleteConfirmationPopUp('')
+
+    }
+
+
+  }
+  function cancelationSearch(){
+    console.log('cancel the search')
+    fetchMyReviews()
+    setSearchAlert('')
   }
   
 
   return (
 
     <>
-      <UserNav></UserNav>
-      {deleteConfirmationPopUp ? <DeleteConfirmation popUp={setDeleteConfirmationPopUp} confirm={setDeleteConfirmation}></DeleteConfirmation> : ''}
+      <UserNav search={searchReviewInMyReviewList} cancelSearch={cancelationSearch} ></UserNav>
+      {deleteConfirmationPopUp !== "" ? <DeleteConfirmation  confirm={deleteConfirmation}></DeleteConfirmation> : ''}
       {/* <DeleteConfirmation></DeleteConfirmation> */}
+      {searchAlert !== ''?<div className='no-result-found' >{searchAlert} </div>:''}
 
       {loader ? <div className='loader'></div> : ''}
 
@@ -303,7 +305,7 @@ export default function My_reviews(props) {
                   {/* <img src={download_icon} alt="" /> */}
                   <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
                   <img className='cursor-pointer' onClick={() => { editMyReview(item) }} src={edit_icon} alt="edit" />
-                  <img className='cursor-pointer' onClick={() => { deleteMyReview(item._id) }} src={delete_icon} alt="delete" />
+                  <img className='cursor-pointer' onClick={() => { setDeleteConfirmationPopUp(item._id) }} src={delete_icon} alt="delete" />
                 </div>
 
 
@@ -338,6 +340,8 @@ export default function My_reviews(props) {
                   </div>
 
                   <div className='movieQueryListBox'>
+                   {movieLoader ? <div style={{width:'25px',height:'25px',borderRadius:'50%',margin:'auto',backgroundColor:'#1f1916',marginTop:'2%',marginBottom:'2%'}} className='commentLoader'></div>:""}
+                    {movieSearchAlert !== ''?<div>{movieSearchAlert}</div>:''}
                     {/* {myReviewMovieName !== ''?  */}
                     {movieList.map((item, index) => {
                       return (
@@ -363,7 +367,7 @@ export default function My_reviews(props) {
 
                 <select className="myReviewFormInput" value={selectTagOption} onChange={(event) => { selectFormReviewTags(event.target.value) }} placeholder="select tags">
                   <option value="" >Genre</option>
-                  {options.map((option, index) => (
+                  {genreList.map((option, index) => (
                     <option key={index} value={option}>{option}</option>
                   ))}
                 </select>

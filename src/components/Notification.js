@@ -31,7 +31,8 @@ export default function Notification(props) {
                 {[...props.userNotifications].reverse().map((item, key) => {
                     return (
                         <div key={key} className='notificationBox'>
-                            <p><strong>{item.senderUserName}</strong>
+                            {/* <p></p> */}
+                            <p><strong>{ item.senderUserName }</strong> 
                             { item.message }     
                             {item.commentedOnComment?<strong>{item.commentedOnComment}</strong>:''}
                             {item.commentedOnComment?<span>on</span>:''}

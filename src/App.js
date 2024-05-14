@@ -29,39 +29,19 @@ const ENDPOINT = process.env.REACT_APP_SERVER_URL
 
 function App() {
   const [userDetails, setUserDetails] = useState('')
-  const [reviews, setReviews] = useState([])
+ 
 
 
 
-  useEffect(async () => {
-    try {
-      const data = await Get(`${process.env.REACT_APP_SERVER_URL}/reviews`, Cookies.get('jwt'))
-      const jsonData = await data.json()
-      if (data) {
-        setReviews(jsonData.data)
-        // console.log(jsonData.data)
-      }
-
-    } catch (error) {
-      console.log('server is not responding')
-      console.log(error)
-      // throw new Error('Failed to fetch data');
-
-    }
-
-
-
-
-
-  }, [])
+  
 
   return (
     <Router>
       <Routes>
-        <Route exact path='/' element={<Homepage reviews={reviews} ></Homepage>}></Route>
+        <Route exact path='/' element={<Homepage  ></Homepage>}></Route>
         <Route path='/signup' element={<LoginSignup setUserDetails={setUserDetails} ></LoginSignup>} ></Route>
         <Route path='/login' element={<LoginSignup setUserDetails={setUserDetails} ></LoginSignup>} ></Route>
-        <Route path='/user' element={<User reviews={reviews} userDetails={userDetails} setUserDetails={setUserDetails}></User>}></Route>
+        <Route path='/user' element={<User  userDetails={userDetails} setUserDetails={setUserDetails}></User>}></Route>
         <Route path='/user/profile-details' element={<Profile_Details userDetails={userDetails} setUserDetails={setUserDetails}></Profile_Details>}></Route>
         <Route path="/user/reviews" element={<My_reviews userReviews={userDetails.reviews}></My_reviews>}></Route>
         <Route path='user/watch list' element={<Watchlist></Watchlist>}></Route>

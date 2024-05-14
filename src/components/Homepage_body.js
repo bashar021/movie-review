@@ -10,13 +10,13 @@ import Get from '../controllers/Get.js'
 import DateFormat from '../controllers/ConvertDate.js'
 import '../styles/Homepage_body.css'
 import CommentSection from './CommentSection.js'
+const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
 
 export default function Homepage_body(props) {
   // props.reviews  
   const [openComment, setOpenComment] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
-  const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
-
+  
   async function addToWatchList(userId, reviewId) {
     // userId  = login user unique id
     // reviewId = reviewId unique id 

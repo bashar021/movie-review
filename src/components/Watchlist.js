@@ -55,6 +55,7 @@ export default function Watchlist() {
       console.log("internal server error")
       console.log(error)
       setLoader(false)
+      navigate('/500')
     }
     
 

@@ -20,7 +20,7 @@ export default function CommentSection(props) {
     // const commentOpenOnPos = window.pageYOffset || document.documentElement.scrollTop;
     async function fetchReviewComments() {
         // console.log('fetching comments for :', props.reviewId)
-        const reviewComments = await Get(`${process.env.REACT_APP_SERVER_URL}/review/comments/${props.reviewId}`, Cookies.get('jwt'))
+        const reviewComments = await Get(`${process.env.REACT_APP_SERVER_URL}/user/comment/review/${props.reviewId}`, Cookies.get('jwt'))
         const jsonData = await reviewComments.json()
         if (reviewComments.ok) {
             // console.log(jsonData.data)
@@ -30,39 +30,45 @@ export default function CommentSection(props) {
         }
 
     }
+
     async function uploadReviewComments() {
         setLoader(true)
-        const data = { reviewId: props.reviewId, comment: userComment }
-        const updatedComment = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/add`, data, Cookies.get('jwt'))
-        const jsonData = await updatedComment.json()
-        if (updatedComment.status === 201) {
-            // console.log(jsonData.data)
-            setReviewComments([...reviewComments, jsonData.data])
-            setUserComment('')
-        } else {
-            console.log('comment not done ')
+        try{
+            const data = { reviewId: props.reviewId, comment: userComment }
+            const updatedComment = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/add`, data, Cookies.get('jwt'))
+            const jsonData = await updatedComment.json()
+            if (updatedComment.status === 201) {
+                setReviewComments([...reviewComments, jsonData.data])
+                setUserComment('')
+            } else {
+                console.log('comment not done ')
+                console.log(jsonData.error)
+            }
+        }catch(error){
+            console.log(error)
         }
         setLoader(false)
-
     }
+
+
     async function replyOnComment() {
         setLoader(true)
-        const data = { reviewId: props.reviewId, commentId: replyOnCommentArea, comment: replyOnCommentInputValue }
-        const repliedReview = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply`, data, Cookies.get('jwt'))
-        const jsonData = await repliedReview.json()
-        if (repliedReview.ok) {
-            console.log('reply has been update')
-            // console.log(jsonData.data.replies)
-            const updatedComments = insertRepliesOnCommentsArray(replyOnCommentArea, jsonData.data.replies)
-            setReviewComments(updatedComments)
-            // replyOnCommentInputValue('')
-            setReplyOnCommentInputValue('')
-        } else {
-            console.log('can not reply to the comment')
+        try{
+            const data = { reviewId: props.reviewId, commentId: replyOnCommentArea, comment: replyOnCommentInputValue }
+            const repliedReview = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply/add`, data, Cookies.get('jwt'))
+            const jsonData = await repliedReview.json()
+            if (repliedReview.ok) {
+                const updatedComments = insertRepliesOnCommentsArray(replyOnCommentArea, jsonData.data.replies)
+                setReviewComments(updatedComments)
+                setReplyOnCommentInputValue('')
+            } else {
+                console.log('can not reply to the comment')
+            }
+
+        }catch(error){
+            console.log(error)
         }
         setLoader(false)
-        // console.log(data)
-
     }
     // Function to recursively search for an object by its _id
     
@@ -104,25 +110,34 @@ export default function CommentSection(props) {
     }
     async function fetchMoreRepliesOfComment(commentId, repliesLength) {
         if (repliesLength >= 0) {
-            const moreReplies = await Get(`${process.env.REACT_APP_SERVER_URL}/comment/reply/more/${props.reviewId}/${commentId}`, Cookies.get('jwt'))
-            const jsonData = await moreReplies.json()
-            if (moreReplies.ok) {
-                setReviewComments(insertRepliesOnCommentsArray(commentId, jsonData.data.replies))
-            } else {
-                console.log('can not fetch more replies')
+            try{
+                const moreReplies = await Get(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply/more/${props.reviewId}/${commentId}`, Cookies.get('jwt'))
+                const jsonData = await moreReplies.json()
+                if (moreReplies.ok) {
+                    setReviewComments(insertRepliesOnCommentsArray(commentId, jsonData.data.replies))
+                } else {
+                    console.log('can not fetch more replies')
+                }
+
+            }catch(error){
+                console.log(error)
             }
+           
         }
     }
     async function deleteComment(parentCommentId, commentId) {
-        const { obj: parentObject, parent: parentParent } = findObjectAndParentById(reviewComments, commentId);
-        console.log(parentParent)
-        const url = parentParent !== null?`${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}`:`http://localhost:500/user/comment/delete/${commentId}/${'none'}`
-        const result = await Get(url,Cookies.get('jwt'))
-        if(!result.ok){
-            console.log('comment has been deleted ')
-            return
+        try{
+            const { obj: parentObject, parent: parentParent } = findObjectAndParentById(reviewComments, commentId);
+            const url = parentParent !== null?`${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}`:`http://localhost:500/user/comment/delete/${commentId}/${'none'}`
+            const result = await Get(url,Cookies.get('jwt'))
+            if(!result.ok){
+                // console.log('comment has been deleted ')
+                return
+            }
+            deleteCommentFromArray(reviewComments,commentId)
+        }catch(error){
+            console.log(error)
         }
-        deleteCommentFromArray(reviewComments,commentId)
     }
     function deleteCommentFromArray(commentsArray,commentId) {
         const { obj: parentObject, parent: parentParent } = findObjectAndParentById(commentsArray, commentId);

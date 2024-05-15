@@ -36,7 +36,7 @@ const Profile = (props) => {
 
   }
   const updateDetails = async function () {
-    const data = await Post(`${process.env.REACT_APP_SERVER_URL}/update-details`, { userName: userName, name: name, email: email, phone: phone }, Cookies.get('jwt'))
+    const data = await Post(`${process.env.REACT_APP_SERVER_URL}/user/details/update`, { userName: userName, name: name, email: email, phone: phone }, Cookies.get('jwt'))
     const jsonData = await data.json()
     if (data.ok) {
       console.log('user details has been updated ')
@@ -51,7 +51,7 @@ const Profile = (props) => {
     }
   }
   async function fetchUserData() {
-    const data = await Get(`${process.env.REACT_APP_SERVER_URL}/details`, Cookies.get('jwt'))
+    const data = await Get(`${process.env.REACT_APP_SERVER_URL}/user/details`, Cookies.get('jwt'))
     const jsonData = await data.json()
     if (data.ok) {
       console.log('user details has been fetched from server  :',jsonData.data.userDetails)

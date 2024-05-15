@@ -53,15 +53,19 @@ const insertUpdateOnCommentsArray = function(reviewComments,commentId, updatedCo
 
 }
 export async function updateCommentDescription (reviewComments,commentId,updatedCommentValue){
-    // const comment = findObjectById(reviewComments,commentId)
+   try{
     const array = insertUpdateOnCommentsArray(reviewComments,commentId,updatedCommentValue)
     const data = {commentId:commentId,commentDescription:updatedCommentValue}
     const result = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/update`,data,Cookies.get('jwt'))
     if(result.ok){
-        console.log('updated successfully')
+        // console.log('updated successfully')
         return array
     }
+   }catch(error){
+    console.log(error)
+   }
     return null
 }
+
 
 // module.exports = {updateCommentDescription}

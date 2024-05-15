@@ -26,7 +26,7 @@ export default function LoginSignup(props) {
     async function handleSignUP(){
         setLoader(true)
         try{
-            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/signup`,{name:name,userName:userName,email:email,phone:phone,password:password})
+            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/user/signup`,{name:name,userName:userName,email:email,phone:phone,password:password})
             // navigate('/user')
             // 201 status code for the sucess creation of the user account 
             const jsonData  = await data.json()
@@ -59,17 +59,10 @@ export default function LoginSignup(props) {
 
         setLoader(true)
         try{
-            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/login`,{email:email,password:password})
+            const data  = await Post(`${process.env.REACT_APP_SERVER_URL}/user/login`,{email:email,password:password})
             const jsonData  = await data.json()
             if(data.ok){ 
-                // console.log(jsonData)
-                // console.log(jsonData.data.email)
-                // props.setUserDetails(jsonData)
-    
-                console.log('user has logged in ')
-                // const authToken = Cookies.get('jwt');
                 Cookies.set('jwt',jsonData.jwt, { expires: 7 })
-                console.log(Cookies.get('jwt'))
                 Cookies.set('email',jsonData.data.email, { expires: 7 })
                 Cookies.set('userName',jsonData.data.userName,{ expires: 7 })
     
@@ -83,10 +76,7 @@ export default function LoginSignup(props) {
             navigate('/404')
 
         }
-       
         setLoader(false)
-        // navigate('/user')
-        // console.log('login')
     }
 
     useEffect(()=>{ 

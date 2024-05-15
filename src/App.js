@@ -13,9 +13,10 @@ import Profile_Details from './components/Profile_Details.js'
 import My_reviews from './components/My_reviews.js';
 import Watchlist from './components/Watchlist.js';
 import socketIOClient from 'socket.io-client';
-import { Unauthorized,NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
 
-const ENDPOINT = process.env.REACT_APP_SERVER_URL
+import { Unauthorized, NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
+
+const io = socketIOClient.connect('http://localhost:8080/');
 // const socket = socketIOClient.connect(ENDPOINT);
 // const socket = socketIOClient.connect('http://localhost:500');
 // const socket = socketIOClient(ENDPOINT,{withCredentials: true});
@@ -29,11 +30,20 @@ const ENDPOINT = process.env.REACT_APP_SERVER_URL
 
 function App() {
   const [userDetails, setUserDetails] = useState('')
- 
 
 
 
-  
+  io.on('connection', client => {
+    client.on('event', data => {
+      console.log('user is online ')
+    });
+    client.on('disconnect', () => {
+      console.log('user is offline ')
+    });
+  });
+
+
+
 
   return (
     <Router>
@@ -41,7 +51,7 @@ function App() {
         <Route exact path='/' element={<Homepage  ></Homepage>}></Route>
         <Route path='/signup' element={<LoginSignup setUserDetails={setUserDetails} ></LoginSignup>} ></Route>
         <Route path='/login' element={<LoginSignup setUserDetails={setUserDetails} ></LoginSignup>} ></Route>
-        <Route path='/user' element={<User  userDetails={userDetails} setUserDetails={setUserDetails}></User>}></Route>
+        <Route path='/user' element={<User userDetails={userDetails} setUserDetails={setUserDetails}></User>}></Route>
         <Route path='/user/profile-details' element={<Profile_Details userDetails={userDetails} setUserDetails={setUserDetails}></Profile_Details>}></Route>
         <Route path="/user/reviews" element={<My_reviews userReviews={userDetails.reviews}></My_reviews>}></Route>
         <Route path='user/watch list' element={<Watchlist></Watchlist>}></Route>

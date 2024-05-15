@@ -1,7 +1,30 @@
+const genreIDs = {
+    12: "Adventure",
+    14: "Fantasy",
+    16: "Animation",
+    18: "Drama",
+    27: "Horror",
+    28: "Action",
+    35: "Comedy",
+    36: "History",
+    37: "Western",
+    53: "Thriller",
+    80: "Crime",
+    99: "Documentary",
+    878: "Science Fiction",
+    9648: "Mystery",
+    10402: "Music",
+    10749: "Romance",
+    10751: "Family",
+    10752: "War",
+    10770: "TV Movie"
+}
+
+
 const fetchMovieGenres = async () => {
     try {
         const API_KEY = 'YOUR_TMDB_API_KEY';
-        const GENRES_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
+        const GENRES_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_IMDB_API_KEY}`;
 
         const response = await fetch(GENRES_URL);
         const data = await response.json();
@@ -16,7 +39,7 @@ const fetchMovieGenres = async () => {
         for (const genre of data.genres) {
             genreMap[genre.id] = genre.name;
         }
-
+        console.log(genreMap)
         return genreMap;
     } catch (error) {
         console.error('Error fetching movie genres:', error);
@@ -29,34 +52,31 @@ const fetchMovieGenres = async () => {
 
 
 export async function getMovieDetails(movieName){
-    // const API_KEY = 'd2d81d21176485cd76c0bcb8a4124982';
-    // const movieName = 'The Dark Knight';
-    console.log(movieName)
+    // fetchMovieGenres()
+    // console.log(movieName)
     const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_IMDB_API_KEY}&query=${encodeURIComponent(movieName)}`;
-
     // Fetch movie details
     const response = await fetch(SEARCH_URL);
     const data = await response.json();
-
     // Check if any movies were found
     if (data.results.length === 0) {
       console.log('No movies found with that name.');
       return null
     }
-    // console.log(data.results)
-    // overview 
-    // original_itile
-    // vote_average
-    // poster_path
-    // genre
     let movieList = []
-
     // Display information for each movie found
     data.results.forEach(movie => {
         const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500'; // Adjust size as needed
         const imageURL = movie.poster_path ? IMAGE_BASE_URL + movie.poster_path : 'No image available';
         const TMDB_BASE_URL = 'https://www.themoviedb.org/movie/';
         const tmdbURL = `${TMDB_BASE_URL}${movie.id}`;
+        // console.log(movie.genre_ids)
+
+        const genre = movie.genre_ids.map((item)=>{
+            return  genreIDs[item]
+            // console.log( genreIDs[item])
+        })
+        console.log(genre)
 
         const data = {
             movieName: movie.original_title,
@@ -64,22 +84,10 @@ export async function getMovieDetails(movieName){
             movieRating:movie.vote_average,
             movieReleaseDate: movie.release_date,
             moviePosterUrl:imageURL,
-            tmdbUrl:tmdbURL
+            tmdbUrl:tmdbURL,
+            genres:genre
         }
         movieList.push(data)
-        // console.log('Movie:', movie.title);
-        // console.log('Overview:', movie.overview);
-        // console.log('Rating:', movie.vote_average);
-        // console.log('Release Date:', movie.release_date);
-  
-        // Display genres
-        // const genres = movie.genres.map(genre => genre.name).join(', ');
-        console.log(movie);
-        // Construct the public image URL (poster path)
-       
-        // console.log('Image URL:', imageURL);
-  
-        // console.log('-----------------------');
     });
     return movieList
 

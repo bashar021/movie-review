@@ -29,6 +29,7 @@ export default function User(props) {
     } catch (error) {
       console.log('server is not responding')
       console.log(error)
+      navigate('/500')
       // throw new Error('Failed to fetch data');
 
     }

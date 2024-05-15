@@ -74,6 +74,7 @@ export default function My_reviews(props) {
     setMovieTmdbReference('')
     setMovieList([])
     setMovieSearchAlert('')
+
   }
   function removeTagFromTagList(index) {
     let option = [...myReviewTags];
@@ -94,7 +95,7 @@ export default function My_reviews(props) {
       movieTmdbReference: movieTmdbReference
 
     }
-    const review = await Post(`${process.env.REACT_APP_SERVER_URL}/upload-review`, data, Cookies.get('jwt'))
+    const review = await Post(`${process.env.REACT_APP_SERVER_URL}/user/review/upload`, data, Cookies.get('jwt'))
     const jsonData = await review.json()
     if (review.status === 201) {
       setLoader(false)
@@ -114,7 +115,7 @@ export default function My_reviews(props) {
     // if (deleteConfirmation) {
       // console.log(reviewId)
       setLoader(true)
-      const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/reviews/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
+      const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/review/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
       const jsonData = await updatedReviews.json()
       if (updatedReviews.ok) {
         // console.log(jsonData.data.ReviewList)
@@ -137,7 +138,7 @@ export default function My_reviews(props) {
     setLoader(true)
     try{
       console.log('fetching my reviews funciton ')
-      const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user-reviews`, Cookies.get('jwt'))
+      const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user/review`, Cookies.get('jwt'))
       if (myReviews.status === 200) {
         const jsonData = await myReviews.json()
         console.log('my review data has been fetched ')
@@ -152,6 +153,7 @@ export default function My_reviews(props) {
     }catch(error){
       console.log('error in fetching')
       console.log(error)
+      navigate('/500')
     }
    
     console.log('nothing found')
@@ -200,7 +202,7 @@ export default function My_reviews(props) {
       movieTmdbReference: movieTmdbReference
 
     }
-    const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/reviews/update`, data, Cookies.get('jwt'))
+    const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/review/update`, data, Cookies.get('jwt'))
     const jsonData = await updatedReviews.json()
     if (updatedReviews.ok) {
       console.log('review has been updated')
@@ -246,6 +248,7 @@ export default function My_reviews(props) {
     setMovieReleaseDate(movie.movieReleaseDate)
     setMovieTmdbReference(movie.tmdbUrl)
     setMovieSearchAlert('')
+    setMyReviewTags([...movie.genres,...myReviewTags])
     
 
 

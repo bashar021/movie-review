@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 import Get from '../controllers/Get.js'
 import DateFormat from '../controllers/ConvertDate.js'
 import '../styles/Homepage_body.css'
+import '../styles/responsive/Homepage.css'
 import CommentSection from './CommentSection.js'
 const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
 
@@ -61,7 +62,7 @@ export default function Homepage_body(props) {
           return (
             <div key={index} className='movie_review_box'>
               <div className='movie_review_box_child'>
-                <img src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt="avengers" height='220px' width="200px" />
+                <img className='movie-review-box-child-poster' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt="avengers" height='220px' width="200px" />
                 <div className='movie_details_box'>
                   <div className='movie_ref_box'>
                     {/* movieTmdbReference */}
@@ -79,11 +80,11 @@ export default function Homepage_body(props) {
                       })
                     }
                   </div>
-                  <p>{item.description.split(' ').slice(0, 70).join(' ')} {item.description.split(' ').length > 90 ? <span onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+                  <p className='movie_details_box-description-p'>{item.description.split(' ').slice(0, 70).join(' ')} {item.description.split(' ').length > 90 ? <span onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
 
 
                 </div>
-                <button className='cursor-pointer' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
+                <button className='cursor-pointer add-to-watchList-button' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
               </div>
 
               <div className='movie_review_box_child2'>

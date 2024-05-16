@@ -3,6 +3,7 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    
     .movie_review_box{
         /* background-color: aqua; */
         /* display: flex; */
@@ -12,7 +13,7 @@
         padding-bottom: 4%;
     }
     .movie_review_box_child{
-        background-color: red;
+        /* background-color: red; */
         display: flex;
         flex-direction: column;
         position: relative;

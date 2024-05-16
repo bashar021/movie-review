@@ -2,6 +2,7 @@
     display: flex;
     justify-content:center;
     margin-top: 3%;
+    position: relative;
     /* padding-left: 10%; */
     /* padding-right: 10%; */
 

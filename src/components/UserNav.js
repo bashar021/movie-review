@@ -6,6 +6,8 @@ import Notification from './Notification.js'
 import Get from '../controllers/Get.js'
 import Cookies from 'js-cookie'
 import homeIcon from '../icons/homeIcon.png'
+// import from '../styles/responsive/HomepageNavbar.css'
+import '../styles/responsive/HomepageNavbar.css'
 
 // import {} from 'react-router-dom'
 
@@ -86,19 +88,19 @@ export default function UserNav(props) {
             <div id='navbar_cont'>
                 <div id='website_name'><span style={{ cursor: 'pointer' }} onClick={() => { navigate('/user') }}>Website Name</span></div>
 
-                <div id="searchCont">
-                    <form onSubmit={handleSearchSubmit}>
-                        <select value={searchOption} onChange={(event)=>{setSearchOption(event.target.value);}}>
+                <div className='searchCont' id="searchCont">
+                    <form id='searchCont-form' onSubmit={handleSearchSubmit}>
+                        <select id='genre-select-field-on-homepage' value={searchOption} onChange={(event)=>{setSearchOption(event.target.value);}}>
                             <option value="name">Search by Name</option>
                             <option value="genre">Search by Genre</option>
                             {/* <option value="rating">Search by Rating</option> */}
                         </select>
-                        <div className='searchInputCancelBtnCont' style={{display:'flex'}}>
-                            <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value);}} placeholder="Enter search query" />
-                            {searchQuery!== ''?<button onClick={()=>{props.cancelSearch();setSearchQuery('')}} className='clearSearchQuery'>X</button>:''
+                        <div id='searchInputCancelBtnCont' className='searchInputCancelBtnCont' style={{display:'flex'}}>
+                            <input type="text" value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value);}} placeholder="search" />
+                            {searchQuery!== ''?<button onClick={()=>{props.cancelSearch();setSearchQuery('')}} type='button' className='clearSearchQuery'>X</button>:''
                             }
                         </div>
-                        <button className='searchQueryBtn' type="submit">Search</button>
+                        <button className='searchQueryBtn' id='searchQueryBtn' type="submit">Search</button>
                     </form>
                 </div>
 

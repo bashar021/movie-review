@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from 'react'
 import { useHistory,useNavigate  } from "react-router-dom";
 import bg from '../images/loginsignupbg.jpg'
 import '../styles/LoginSignup.css'
+import '../styles/responsive/LoginSignup.css'
 import user_profile_icon from '../icons/name.png'
 import email_icon from '../icons/email-icon.png'
 import phone_icon from '../icons/phone-icon.png'
@@ -132,7 +133,7 @@ export default function LoginSignup(props) {
                                 </div>
                                 <div>
                                     <img src={password_icon} alt="" />
-                                    <input value={confirmPass}  onChange={(event)=>{setConfirmPass(event.target.value)}} type="password" placeholder='Re Enter you Password' />
+                                    <input value={confirmPass}  onChange={(event)=>{setConfirmPass(event.target.value)}} type="password" placeholder='Re Enter your Password' />
                                 </div>
                                 <button type='submit' >SignUp</button>
                             </form>

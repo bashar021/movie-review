@@ -1,0 +1,60 @@
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #user_detail_cont{
+       flex-direction: column;
+    
+    }
+    #profile_avatar_cont{
+        /* background-color: aqua; */
+        width: 100%;
+        margin-top: 13%;
+        padding-bottom: 0px;
+    }
+    .profile-container{
+        /* background-color: aqua; */
+        width: 100%;
+    }
+    .details_field{
+        /* background-color: rgb(229, 255, 0); */
+        width: 95%;
+        margin: auto;
+        flex-direction: column;
+        /* justify-content: left; */
+        text-align: left;
+        padding-left: 0px;
+        padding-left: 0px;
+        align-items: start;
+        margin-bottom: 4%;
+    }
+    .editable_detail_box{
+        /* background-color: aqua; */
+        width: 100%;
+        align-items: left;
+        margin-left: 0px;
+        padding: 0px;
+        justify-content: space-between;
+    }
+    #save_details_btn{
+        /* position:absolute;
+        top: 16px;
+        right: 5px; */
+        /* z-index: 15; */
+        /* margin-right: 5%; */
+        right:5px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

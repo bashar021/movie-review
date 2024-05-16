@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Profile.css'; // Import CSS file for styling
+import '../styles/responsive/Profile.css'
 import edit_icon from '../icons/edit.png'
 import avatar from '../icons/avatar.png'
 import Post from '../controllers/Post.js'
@@ -101,6 +102,7 @@ const Profile = (props) => {
 
         <div className="profile-container">
           <button id='save_details_btn' onClick={() => { updateDetails() }} disabled={saveDetailsBtn}>save</button>
+          
           <div className='details_field'>
             <label className='general_details_labels' htmlFor="userName">UserName :</label>
             <div className='editable_detail_box'>

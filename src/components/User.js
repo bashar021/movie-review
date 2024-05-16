@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../styles/User.css'
+import '../styles/responsive/User.css'
 import Homepage_body from './Homepage_body.js'
 import Profile_Details from './Profile_Details.js'
 import { useHistory, useNavigate, Link } from "react-router-dom";
@@ -113,8 +114,12 @@ export default function User(props) {
   return (
     <>
       <UserNav cancelSearch={cancelSearch} search={performSearchQuery}></UserNav>
+      <div id="homepage-review-cont" >
       {spinner ? <div className='loader'></div> : ''}
       <Homepage_body searchAlert={searchAlert} reviews={searchReviews.length > 0 ? searchReviews : FetchedReviews}></Homepage_body>
+
+      </div>
+      
 
 
     </>

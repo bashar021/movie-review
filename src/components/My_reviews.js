@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../styles/My_reviews.css'
 import movieImg from '../images/MV5BNGZiMzBkZjMtNjE3Mi00MWNlLWIyYjItYTk3MjY0Yjg5ODZkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'
 import spidermanImg from '../images/spiderman.jpeg'
+import '../styles/responsive/MyReviews.css'
 import imdb from '../icons/imdb.png'
 import download_icon from '../icons/download.png'
 import like_icon from '../icons/like.png'
@@ -312,7 +313,7 @@ export default function My_reviews(props) {
                 </div>
 
 
-                <div>
+                <div className='myReviewDetailsBox'>
                   <h6>{item.movieName}</h6>
                   <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
                   <div className='tags_cont'>

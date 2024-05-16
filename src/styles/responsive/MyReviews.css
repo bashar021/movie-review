@@ -1,0 +1,61 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .myReviewBoxes {
+        width: 25%;
+        margin: 2%;
+    }
+
+    .myReviewDiscription {
+        /* text-align: justify; */
+        display: none
+    }
+
+    .tags_cont {
+        display: none;
+    }
+
+    .myReviewDetailsBox h6 {
+        font-size: 12px;
+    }
+
+    .myReviewDetailsBox p:nth-child(2) {
+        display: none;
+    }
+    #my_review_adding_form{
+        width: 100%;
+        position: fixed;
+        z-index:15;
+    }
+    #my_review_adding_form form{
+        width: 90%;
+        margin: 0px;
+        padding: 0px;
+      
+        /* background-color: aqua; */
+        /* padding-left: 5%; */
+        /* padding-right: ; */
+        margin: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    #myReviewAddBtn{
+        font-size: 60px;
+        width: 12vw;
+        height: 12vw;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

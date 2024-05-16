@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/Watchlist.css'
 import Homepage_body from './Homepage_body.js'
+import '../styles/responsive/WatchList.css'
 import img from '../images/MV5BNGZiMzBkZjMtNjE3Mi00MWNlLWIyYjItYTk3MjY0Yjg5ODZkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'
 import imdb from '../icons/imdb.png'
 import download_icon from '../icons/download.png'
@@ -144,10 +145,10 @@ export default function Watchlist() {
                       })}
                     </div>
                     {/* <p>{item.reviewObject.description}</p> */}
-                    <p>{item.description.split(' ').slice(0, 35).join(' ')} {item.description.split(' ').length > 45 ? <span className='cursor-pointer' style={{color:'blue'}} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+                    <p  id='watch-list-review-description'>{item.description.split(' ').slice(0, 35).join(' ')} {item.description.split(' ').length > 45 ? <span className='cursor-pointer' style={{color:'blue'}} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
                   </div>
 
-                  <button className='cursor-pointer' onClick={() => { setDeleteConfirmationPopUp(item._id) }}><img src={deleteIcon} alt="save" /></button>
+                  <button className='cursor-pointer delete-watchList-review-btn'  onClick={() => { setDeleteConfirmationPopUp(item._id) }}><img src={deleteIcon} alt="delete" /></button>
                 </div>
 
                 <div className='watchlist_movie_review_box_child2'>

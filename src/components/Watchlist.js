@@ -15,6 +15,7 @@ import UserNav from './UserNav.js'
 import dateFormat from '../controllers/ConvertDate.js'
 import findMatches from '../controllers/FindMatchesReview.js'
 import DeleteConfirmation from './DeleteConfirmation.js'
+import BriefView from './BriefView.js'
 // import Cookies from 'js-cookie'
 // 
 // import Cookies from 'js-cookie'
@@ -26,6 +27,7 @@ export default function Watchlist() {
   const navigate = useNavigate()
   const [searchAlert,setSearchAlert] = useState('')
   const [deleteConfirmationPopUp,setDeleteConfirmationPopUp] = useState('')
+  const [briefView,setBriefView] = useState(null)
 
   useEffect(() => {
     if(Cookies.get('jwt')){
@@ -114,6 +116,7 @@ export default function Watchlist() {
   return (
     <>
       <UserNav search={handleSearchReviewInWatchList} cancelSearch={cancelSearchReviewInWatchList}></UserNav>
+      {briefView !== null ?<BriefView review={briefView} setBriefView={setBriefView}></BriefView>:''}
       {searchAlert?<div className='no-result-found' >{searchAlert} </div>:''}
      
       {deleteConfirmationPopUp !== ''?<DeleteConfirmation confirm={handleDeleteConfirmation}></DeleteConfirmation>:''}
@@ -128,7 +131,7 @@ export default function Watchlist() {
               <div key={index} className="watchlist_const">
                 <div className='watchlist_movie_review_box'>
 
-                  <img src={item.moviePosterUrl} alt={item.movieName} height='200px' />
+                  <img onClick={()=>{setBriefView(item)}} className='cursor-pointer' src={item.moviePosterUrl} alt={item.movieName} height='200px' />
 
 
 

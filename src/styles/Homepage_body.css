@@ -12,6 +12,7 @@
     padding-top: 1%;
     /* flex-wrap: wrap; */
     padding-left: 0.5%;
+    /* overflow: wrap; */
 }
 .addCommentBox img{
     /* background-color: aqua; */
@@ -20,10 +21,15 @@
     width:35px;
 
 }
+.addCommentBox div{
+    /* background-color: aqua; */
+    width: 90%;
+    padding-top: 0.5%;
+}
 .addCommentBox form{
     /* background-color: rgb(255, 255, 255); */
     background-color: rgba(138, 135, 135, 0.415);
-    width: 95%;
+    width: 100%;
     margin-left: 1%;
     /* border-color: ; */
     border-radius: 20px;
@@ -53,7 +59,7 @@
 .addCommentBox button{
     /* display: block; */
     /* flex-basis: 100%; */
-    margin-left: 5%;
+    margin-left: 1.5%;
     margin-top: 1%;
     border-radius: 10px;
     padding: 2px 10px 2px 10px;
@@ -61,6 +67,11 @@
     color: black;
     border-color:transparent;
     cursor: pointer;
+    display: block;
+    /* flex: 1; */
+    /* flex-basis: 100%; */
+    order: 4; /* Make sure it's ordered after the pseudo-element */
+  flex: 1 1 auto;
 }
 .addCommentBox button:hover{
     background-color: rgb(236, 235, 235);

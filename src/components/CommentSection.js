@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import Get from '../controllers/Get.js'
 import Post from '../controllers/Post.js'
 import dateFormat from '../controllers/ConvertDate.js'
-import {updateCommentDescription} from '../controllers/CommentsControlers.js'
+import { updateCommentDescription } from '../controllers/CommentsControlers.js'
 
 export default function CommentSection(props) {
     const [userComment, setUserComment] = useState('')
@@ -15,8 +15,8 @@ export default function CommentSection(props) {
     const editCommentOptionRef = useRef(null);
     const [replyOnCommentArea, setReplyOnCommentArea] = useState('')
     const [replyOnCommentInputValue, setReplyOnCommentInputValue] = useState('')
-    const [updateComment,setUpdateComment] = useState(false)
-    const [loader,setLoader] = useState(false)
+    const [updateComment, setUpdateComment] = useState(false)
+    const [loader, setLoader] = useState(false)
     // const commentOpenOnPos = window.pageYOffset || document.documentElement.scrollTop;
     async function fetchReviewComments() {
         // console.log('fetching comments for :', props.reviewId)
@@ -33,7 +33,7 @@ export default function CommentSection(props) {
 
     async function uploadReviewComments() {
         setLoader(true)
-        try{
+        try {
             const data = { reviewId: props.reviewId, comment: userComment }
             const updatedComment = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/add`, data, Cookies.get('jwt'))
             const jsonData = await updatedComment.json()
@@ -44,7 +44,7 @@ export default function CommentSection(props) {
                 console.log('comment not done ')
                 console.log(jsonData.error)
             }
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
         setLoader(false)
@@ -53,7 +53,7 @@ export default function CommentSection(props) {
 
     async function replyOnComment() {
         setLoader(true)
-        try{
+        try {
             const data = { reviewId: props.reviewId, commentId: replyOnCommentArea, comment: replyOnCommentInputValue }
             const repliedReview = await Post(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply/add`, data, Cookies.get('jwt'))
             const jsonData = await repliedReview.json()
@@ -65,13 +65,13 @@ export default function CommentSection(props) {
                 console.log('can not reply to the comment')
             }
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
         setLoader(false)
     }
     // Function to recursively search for an object by its _id
-    
+
     // Function to recursively search for an object by its _id and return its parent object
     function findObjectAndParentById(dataArray, id, parent = null) {
         for (const obj of dataArray) {
@@ -110,7 +110,7 @@ export default function CommentSection(props) {
     }
     async function fetchMoreRepliesOfComment(commentId, repliesLength) {
         if (repliesLength >= 0) {
-            try{
+            try {
                 const moreReplies = await Get(`${process.env.REACT_APP_SERVER_URL}/user/comment/reply/more/${props.reviewId}/${commentId}`, Cookies.get('jwt'))
                 const jsonData = await moreReplies.json()
                 if (moreReplies.ok) {
@@ -119,27 +119,27 @@ export default function CommentSection(props) {
                     console.log('can not fetch more replies')
                 }
 
-            }catch(error){
+            } catch (error) {
                 console.log(error)
             }
-           
+
         }
     }
     async function deleteComment(parentCommentId, commentId) {
-        try{
+        try {
             const { obj: parentObject, parent: parentParent } = findObjectAndParentById(reviewComments, commentId);
-            const url = parentParent !== null?`${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}`:`http://localhost:500/user/comment/delete/${commentId}/${'none'}`
-            const result = await Get(url,Cookies.get('jwt'))
-            if(!result.ok){
+            const url = parentParent !== null ? `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}` : `http://localhost:500/user/comment/delete/${commentId}/${'none'}`
+            const result = await Get(url, Cookies.get('jwt'))
+            if (!result.ok) {
                 // console.log('comment has been deleted ')
                 return
             }
-            deleteCommentFromArray(reviewComments,commentId)
-        }catch(error){
+            deleteCommentFromArray(reviewComments, commentId)
+        } catch (error) {
             console.log(error)
         }
     }
-    function deleteCommentFromArray(commentsArray,commentId) {
+    function deleteCommentFromArray(commentsArray, commentId) {
         const { obj: parentObject, parent: parentParent } = findObjectAndParentById(commentsArray, commentId);
         if (parentObject && parentParent) {
             // Delete the comment and its replies
@@ -163,17 +163,17 @@ export default function CommentSection(props) {
         // return commentsArray;
 
     }
-    async function handleUpdateCommentButton(commentId){
+    async function handleUpdateCommentButton(commentId) {
         setLoader(true)
-        const data = await updateCommentDescription(reviewComments,commentId,replyOnCommentInputValue)
-        if(data){
+        const data = await updateCommentDescription(reviewComments, commentId, replyOnCommentInputValue)
+        if (data) {
             setReviewComments([...data])
             setReplyOnCommentInputValue('')
             setUpdateComment(false)
             setReplyOnCommentArea('')
         }
         setLoader(false)
-        
+
 
     }
     useEffect(() => {
@@ -209,8 +209,8 @@ export default function CommentSection(props) {
 
                             {Cookies.get('userName') === item.commentUserName ? <button onClick={() => { setShowCommentEditOption(item._id) }} className="editCommentOptionContBtn">&#10247;</button> : ''}
                             {showCommentEditOption === item._id ? <div ref={editCommentOptionRef} className='editCommentOptions'>
-                                <p onClick={()=>{setUpdateComment(true);setReplyOnCommentArea(item._id);setReplyOnCommentInputValue(item.commentDescription)}} >edit</p>
-                                <p onClick={() => { deleteComment(index, item._id);setShowCommentEditOption('') }}>delete</p>
+                                <p onClick={() => { setUpdateComment(true); setReplyOnCommentArea(item._id); setReplyOnCommentInputValue(item.commentDescription) }} >edit</p>
+                                <p onClick={() => { deleteComment(index, item._id); setShowCommentEditOption('') }}>delete</p>
                             </div> : ''}
                         </div>
 
@@ -226,11 +226,16 @@ export default function CommentSection(props) {
                     {replyOnCommentArea === item._id ?
                         <div className='addCommentBox'>
                             <img src={userAvatar} alt='user' />
+                            <div>
                             <form>
-                                <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => {if(Cookies.get('jwt')){ setReplyOnCommentInputValue(event.target.value)}else{alert('for comment you have to login' )} }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                                <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => { if (Cookies.get('jwt')) { setReplyOnCommentInputValue(event.target.value) } else { alert('for comment you have to login') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
                             </form>
-                            {replyOnCommentInputValue !== '' ? (updateComment?<button onClick={()=>{handleUpdateCommentButton(item._id)}}>Update</button>:<button onClick={() => { replyOnComment() }}>Post</button>) : ''}
-                            {loader && replyOnCommentInputValue !== ''?<span className='commentLoader' ></span>:''}
+                            {replyOnCommentInputValue !== '' ? (updateComment ? <button onClick={() => { handleUpdateCommentButton(item._id) }}>Update</button> : <button onClick={() => { replyOnComment() }}>Post</button>) : ''}
+                            {loader && replyOnCommentInputValue !== '' ? <span className='commentLoader' ></span> : ''}
+                            
+
+                            </div>
+                           
                         </div> : ''
                     }
 
@@ -249,11 +254,16 @@ export default function CommentSection(props) {
         <div className='commentCont'>
             <div className='addCommentBox'>
                 <img src={userAvatar} alt='user' />
-                <form>
-                    <TextareaAutosize value={userComment} onChange={(event) => { if(Cookies.get('jwt')){setUserComment(event.target.value)}else{alert(' for comment you have to login ')}}} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
-                </form>
-                {userComment !== '' ? <button onClick={() => { uploadReviewComments() }}>Post</button> : ''}
-                {loader && userComment !== ''?<span className='commentLoader'></span>:''}
+                <div>
+                    <form>
+                        <TextareaAutosize value={userComment} onChange={(event) => { if (Cookies.get('jwt')) { setUserComment(event.target.value) } else { alert(' for comment you have to login ') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                    </form>
+
+                     {userComment !== '' ? <button onClick={() => { uploadReviewComments() }}>Post</button> : ''}
+                    {loader && userComment !== '' ? <span className='commentLoader'></span> : ''}
+                </div>
+
+               
             </div>
 
             <div className='commentBoxesCont'>

@@ -49,6 +49,7 @@ export default function My_reviews(props) {
   const [searchAlert,setSearchAlert] = useState('')
   const [movieSearchAlert,setMovieSearchAlert] = useState('')
   const [movieLoader,setMovieLoader] = useState(false)
+  const [briefView,setBriefView] = useState(null)
 
   function selectFormReviewTags(value) {
     setSelectTagOption(value)
@@ -289,7 +290,7 @@ export default function My_reviews(props) {
   return (
 
     <>
-    {/* <BriefView></BriefView> */}
+    {briefView !== null ?<BriefView review={briefView} setBriefView={setBriefView}></BriefView>:''}
       <UserNav search={searchReviewInMyReviewList} cancelSearch={cancelationSearch} ></UserNav>
       {deleteConfirmationPopUp !== "" ? <DeleteConfirmation  confirm={deleteConfirmation}></DeleteConfirmation> : ''}
       {/* <DeleteConfirmation></DeleteConfirmation> */}
@@ -302,10 +303,10 @@ export default function My_reviews(props) {
 
         {myReviewsList.map((item, key) => {
           return (
-            <div key={key} className='myReviewBoxes'>
+            <div  key={key} className='myReviewBoxes'>
               {/* <img className='myReviewBoxesImg' src={spidermanImg} alt={item.movieName} /> */}
-              <img className='myReviewBoxesImg' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt={item.movieName} />
-              <div className='myReviewBoxesDetailsCont' >
+              <img className='myReviewBoxesImg'  onClick={()=>{setBriefView(item)}} src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt={item.movieName} />
+              <div className='myReviewBoxesDetailsCont '   >
                 <div className='myReviewOptions'>
                   {/* <img src={imdb} alt="" /> */}
                   <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
@@ -316,7 +317,7 @@ export default function My_reviews(props) {
                 </div>
 
 
-                <div className='myReviewDetailsBox'>
+                <div className='myReviewDetailsBox cursor-pointer' onClick={()=>{setBriefView(item)}}>
                   <h6>{item.movieName}</h6>
                   <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
                   <div className='tags_cont'>
@@ -327,7 +328,9 @@ export default function My_reviews(props) {
                     }
 
                   </div>
+
                   <p className='myReviewDiscription'>{item.description.split(' ').slice(0, 30).join(' ')}{item.description.split(' ').length > 40 ? <span className='cursor-pointer' style={{ color: 'blue' }} onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+
                 </div>
               </div>
             </div>)

@@ -1,18 +1,179 @@
-#brief-view-cont{
-    background-color: aqua;
+#brief-view-cont {
+    background-color: rgba(21, 20, 20, 0.534);
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     /* display: fixe; */
     position: fixed;
     z-index: 20;
-    top:0px;
+    top: 0px;
 
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
-#brief-view-close-btn{
+
+#brief-view-close-btn {
     float: right;
     /* right: 10px; */
     margin-right: 5%;
     margin-top: 2.5%;
     font-size: 25px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    color: rgb(255, 0, 0);
+    background-color: transparent;
+    border-style: none;
+    transition: all 0.5s;
 }
+
+#brief-view-close-btn:hover {
+    color: grey;
+}
+
+#brief-view-review-box {
+    background-color: rgba(17, 17, 18, 0.883);
+    display: flex;
+    width: 70%;
+    margin: auto;
+    flex-wrap: wrap;
+    margin-bottom: 5%;
+    color: white;
+    margin-top: 5%;
+    padding-bottom: 2%;
+    /* height: 100%; */
+    /* overflow-y: scroll; */
+
+
+}
+
+#brief-view-review-img-box {
+    /* background-color: red; */
+    width: 35%;
+
+
+}
+
+#brief-view-review-img-box img {
+    width: 100%;
+}
+
+#brief-view-review-details-box {
+    padding-right: 2%;
+    padding-left: 2%;
+    width: 60%;
+
+}
+
+#brief-view-review-details-box p:nth-child(1) {
+    font-size: 25px;
+    font-weight: bold;
+    /* color: red; */
+}
+
+.brief-review-comment-line {
+    display: flex;
+    width: 100%;
+    /* background-color: rebeccapurple; */
+    justify-content: space-between;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.brief-review-comment-line div span {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.commentCont {
+    width: 100%;
+    /* background-color: brown; */
+}
+
+.brief-review-myReviewDiscription {
+    text-align: justify;
+    padding-right: 1%;
+    padding-left: 1%;
+    /* background-color: aqua; */
+    margin-left: 0px;
+    width: 98%;
+}
+
+
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #brief-view-review-box {
+        flex-direction: column;
+        width: 90%;
+        /* margin-top: 2%; */
+        /* overflow: scroll; */
+    }
+
+    #brief-view-review-img-box {
+        /* background-color: aqua; */
+        width: 100%;
+    }
+
+    #brief-view-review-img-box img {
+        width: 80%;
+        margin: auto;
+        margin-left: 10%;
+
+    }
+
+    #brief-view-review-details-box p:nth-child(1) {
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        /* color: red; */
+    }
+
+    #brief-view-review-details-box {
+        /* background-color: aqua; */
+        width: 100%;
+    }
+
+    .brief-review-myReviewDiscription {}
+
+    .brief-review-tags-cont {
+        display: block;
+    }
+
+    .brief-review-myReviewDiscription {
+        width: 93%;
+        /* background-color: aqua; */
+    }
+
+    .brief-review-comment-line div span {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .brief-review-comment-line{
+        /* background-color: aqua; */
+        width: 93%;
+    }
+    #brief-view-close-btn{
+        /* background-color: aqua; */
+        font-size: 30px;
+        margin: 0px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

@@ -1,12 +1,13 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    
-    
-#myReviewsCont{
-   
-    margin-top: 17%;
-    /* flex-direction: row; */
-}
+
+
+    #myReviewsCont {
+
+        margin-top: 17%;
+        /* flex-direction: row; */
+    }
+
     .myReviewBoxes {
         width: 25%;
         margin: 2%;
@@ -28,16 +29,18 @@
     .myReviewDetailsBox p:nth-child(2) {
         display: none;
     }
-    #my_review_adding_form{
+
+    #my_review_adding_form {
         width: 100%;
         position: fixed;
-        z-index:15;
+        z-index: 15;
     }
-    #my_review_adding_form form{
+
+    #my_review_adding_form form {
         width: 90%;
         margin: 0px;
         padding: 0px;
-      
+
         /* background-color: aqua; */
         /* padding-left: 5%; */
         /* padding-right: ; */
@@ -45,12 +48,22 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
     }
-    #myReviewAddBtn{
+
+    #myReviewAddBtn {
         font-size: 60px;
         width: 12vw;
         height: 12vw;
+    }
+    .myReviewDetailsBox{
+        /* background-color: aqua; */
+        height: 100%;
+        /* text-align:end; */
+        display: flex;
+        justify-content:left;
+        align-items:end;
+
     }
 
 }

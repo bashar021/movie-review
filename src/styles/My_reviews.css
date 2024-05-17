@@ -33,6 +33,7 @@
     /* overflow-x: ; */
     flex-wrap: wrap;
     justify-content: space-evenly;
+    margin-top: 5%;
     /* flex-direction: row; */
 }
 .myReviewBoxes{

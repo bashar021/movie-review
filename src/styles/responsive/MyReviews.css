@@ -1,5 +1,12 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    
+    
+#myReviewsCont{
+   
+    margin-top: 17%;
+    /* flex-direction: row; */
+}
     .myReviewBoxes {
         width: 25%;
         margin: 2%;

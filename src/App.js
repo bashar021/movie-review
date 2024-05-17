@@ -13,6 +13,7 @@ import Profile_Details from './components/Profile_Details.js'
 import My_reviews from './components/My_reviews.js';
 import Watchlist from './components/Watchlist.js';
 import socketIOClient from 'socket.io-client';
+import BriefView from './components/BriefView.js'
 
 import { Unauthorized, NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
 
@@ -46,6 +47,7 @@ function App() {
 
 
   return (
+
     <Router>
       <Routes>
         <Route exact path='/' element={<Homepage  ></Homepage>}></Route>

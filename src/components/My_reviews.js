@@ -17,6 +17,7 @@ import DeleteConfirmation from './DeleteConfirmation.js'
 import {useNavigate} from 'react-router-dom'
 import findMatches from '../controllers/FindMatchesReview.js'
 import genreList from '../Modules/GenreOptionsList.js'
+import BriefView from './BriefView.js'
 const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
 
 
@@ -288,14 +289,16 @@ export default function My_reviews(props) {
   return (
 
     <>
+    {/* <BriefView></BriefView> */}
       <UserNav search={searchReviewInMyReviewList} cancelSearch={cancelationSearch} ></UserNav>
       {deleteConfirmationPopUp !== "" ? <DeleteConfirmation  confirm={deleteConfirmation}></DeleteConfirmation> : ''}
       {/* <DeleteConfirmation></DeleteConfirmation> */}
       {searchAlert !== ''?<div className='no-result-found' >{searchAlert} </div>:''}
 
-      {loader ? <div className='loader'></div> : ''}
+     
 
       <div id='myReviewsCont' style={{ color: 'white' }}>
+      {loader ? <div className='loader'></div> : ''}
 
         {myReviewsList.map((item, key) => {
           return (

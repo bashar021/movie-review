@@ -1,0 +1,18 @@
+#brief-view-cont{
+    background-color: aqua;
+    width: 100vw;
+    height: 100vh;
+    /* display: fixe; */
+    position: fixed;
+    z-index: 20;
+    top:0px;
+
+
+}
+#brief-view-close-btn{
+    float: right;
+    /* right: 10px; */
+    margin-right: 5%;
+    margin-top: 2.5%;
+    font-size: 25px;
+}

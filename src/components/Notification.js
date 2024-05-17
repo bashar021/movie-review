@@ -2,6 +2,7 @@ import React, { useRef ,useEffect} from 'react'
 import Get from '../controllers/Get.js'
 import Cookies from 'js-cookie'
 import '../styles/Notification.css'
+import '../styles/responsive/Notification.css'
 
 export default function Notification(props) {
     // const notification = [1, 2, 3, 22, 2, 2, 2, 2, 2, 2, 2, 2, 22, , 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]

@@ -115,12 +115,13 @@ export default function Watchlist() {
     <>
       <UserNav search={handleSearchReviewInWatchList} cancelSearch={cancelSearchReviewInWatchList}></UserNav>
       {searchAlert?<div className='no-result-found' >{searchAlert} </div>:''}
-      {loader? <div className="loader"></div>:''}
+     
       {deleteConfirmationPopUp !== ''?<DeleteConfirmation confirm={handleDeleteConfirmation}></DeleteConfirmation>:''}
       
       
      
       <div id="user_watchlist">
+      {loader? <div className="loader"></div>:''}
         {
           userWatchLists.map((item, index) => {
             return (

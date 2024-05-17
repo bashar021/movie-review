@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   column-gap: 20px;
+  /* position: fixed; */
 }
 
 #notificationIconBtn {
@@ -56,7 +57,7 @@
 
 /* Dropdown styles */
 .userOptionDropdown {
-  position: absolute;
+  position: fixed;
   top: 50px;
   /* Adjust this value based on your design */
   right: 10px;

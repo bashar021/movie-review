@@ -2,30 +2,13 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .watchlist_const{
-        width: 45%;
-        padding-bottom: 3%;
-    }
-    .watchlist_movie_review_box{
-        flex-direction: column;
-        position: relative;
-    }
-    #watch-list-review-description{
-        display: none;
-    }
-    .watchlist_tags_cont{
-        display: none;
-    }
-    .watchlist_movie_review_box_child2{
-        display: none;
-    }
-    .delete-watchList-review-btn{
-        position: absolute;
-        top: 0px;
-    }
-    #user_watchlist{
-        margin-top: 18%;
-    }
+    /* #notificationTab{
+        width: ;
+    } */
+    
+.notificationTabShow{
+    width: 70%;
+}
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

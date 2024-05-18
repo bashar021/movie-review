@@ -39,7 +39,7 @@ export default function Notification(props) {
             <div   ref={notificationRef} id="notificationCont">
                 {[...props.userNotifications].reverse().map((item, key) => {
                     return (
-                        <div  onClick={()=>{notificationReview.setNotificationReviewId(item.reviewId);navigate('/user')}}  key={key} className='cursor-pointer notificationBox'>
+                        <div  onClick={()=>{notificationReview.setNotificationReviewId(item.reviewId); props.setShowNotification(false);navigate('/user')}}  key={key} className='cursor-pointer notificationBox'>
                             {/* <p></p> */}
                             <p><strong>{ item.senderUserName }</strong> 
                             { item.message }     

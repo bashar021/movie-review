@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect,useContext} from 'react'
 import '../styles/Homepage.css'
 import img from '../images/MV5BNGZiMzBkZjMtNjE3Mi00MWNlLWIyYjItYTk3MjY0Yjg5ODZkXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'
 import imdb from '../icons/imdb.png'
@@ -11,13 +11,22 @@ import DateFormat from '../controllers/ConvertDate.js'
 import '../styles/Homepage_body.css'
 import '../styles/responsive/Homepage.css'
 import CommentSection from './CommentSection.js'
+import NotificationContext from '../contexts/notifications/NotificationsContext.js'
+
 const brokenImage = 'https://ih1.redbubble.net/image.5218811881.3250/flat,750x,075,f-pad,750x1000,f8f8f8.u19.jpg'
 
 export default function Homepage_body(props) {
   // props.reviews  
   const [openComment, setOpenComment] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
-
+  const NotificationId = useContext(NotificationContext)
+ 
+  useEffect(()=>{
+    if (NotificationId.notificationReviewId !== '') {
+      // setNotificationId(NotificationId.notificationReviewId)
+      setOpenComment(NotificationId.notificationReviewId)
+    }
+  },[NotificationId.notificationReviewId])
   async function addToWatchList(userId, reviewId) {
     // userId  = login user unique id
     // reviewId = reviewId unique id 
@@ -53,63 +62,66 @@ export default function Homepage_body(props) {
       }, 4000);
     }
   }
+
+
+  
   return (
     <>
       {props.searchAlert ? <div className='searchQueryAlert' style={{ color: 'white' }}> not result found</div> : ''}
-      
 
 
-        {
-          [...props.reviews].reverse().map((item, index) => {
-            return (
-              <div key={index} className='movie_review_box'>
-                <div className='movie_review_box_child'>
-                  <img className='movie-review-box-child-poster' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt="avengers" height='220px' width="200px" />
-                  <div className='movie_details_box'>
-                    <div className='movie_ref_box'>
-                      {/* movieTmdbReference */}
-                      <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
-                      <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
 
-                    </div>
-                    <p>{item.movieName}</p>
-                    <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
-
-                    <div className='tags_cont'>
-                      {
-                        item.tags.map((item, index) => {
-                          return <span key={index}>{item}</span>
-                        })
-                      }
-                    </div>
-                    <p className='movie_details_box-description-p'>{item.description.split(' ').slice(0, 70).join(' ')} {item.description.split(' ').length > 90 ? <span onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
-
+      {
+        [...props.reviews].reverse().map((item, index) => {
+          return (
+            <div key={index} className='movie_review_box'>
+              <div className='movie_review_box_child'>
+                <img className='movie-review-box-child-poster' src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt="avengers" height='220px' width="200px" />
+                <div className='movie_details_box'>
+                  <div className='movie_ref_box'>
+                    {/* movieTmdbReference */}
+                    <img className='cursor-pointer' title='check on TMDB' src={imdb} onClick={() => { window.open(item.movieTmdbReference, '_blank') }} alt="imdb" />
+                    <img className='cursor-pointer' title='download' onClick={() => { window.open(item.downloadLink, '_blank') }} src={download_icon} alt="download" />
 
                   </div>
-                  <button className='cursor-pointer add-to-watchList-button' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
-                </div>
+                  <p>{item.movieName}</p>
+                  <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
 
-                <div className='movie_review_box_child2'>
-                  <div>
-                    <span>{item.userName}</span>
-                    <span className='cursor-pointer' onClick={() => { setOpenComment(item._id) }}>Comment</span>
+                  <div className='tags_cont'>
+                    {
+                      item.tags.map((item, index) => {
+                        return <span key={index}>{item}</span>
+                      })
+                    }
                   </div>
-                  <span>{DateFormat(item.date)}</span>
+                  <p className='movie_details_box-description-p'>{item.description.split(' ').slice(0, 70).join(' ')} {item.description.split(' ').length > 90 ? <span onClick={() => { window.open(item.movieTmdbReference, '_blank') }}>Read more</span> : ''}</p>
+
+
                 </div>
-                {openComment === item._id ? <CommentSection reviewId={item._id} setOpenComment={setOpenComment} ></CommentSection> : ''}
-
-
+                <button className='cursor-pointer add-to-watchList-button' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
               </div>
-            )
-          })
-        }
 
-        {
-          alertMessage !== '' ? <div className='addedToWatchListMessageBox'>
-            <p>{alertMessage}</p>
-          </div> : ''
-        }
-     
+              <div className='movie_review_box_child2'>
+                <div>
+                  <span>{item.userName}</span>
+                  <span className='cursor-pointer' onClick={() => { setOpenComment(item._id) }}>Comment</span>
+                </div>
+                <span>{DateFormat(item.date)}</span>
+              </div>
+              {openComment === item._id ? <CommentSection reviewId={item._id} setOpenComment={setOpenComment} ></CommentSection> : ''}
+
+
+            </div>
+          )
+        })
+      }
+
+      {
+        alertMessage !== '' ? <div className='addedToWatchListMessageBox'>
+          <p>{alertMessage}</p>
+        </div> : ''
+      }
+
 
     </>
   )

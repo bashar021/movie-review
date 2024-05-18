@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import '../styles/User.css'
 import '../styles/responsive/User.css'
 import Homepage_body from './Homepage_body.js'
 import Profile_Details from './Profile_Details.js'
-import { useHistory, useNavigate, Link } from "react-router-dom";
+import { useHistory, useNavigate, Link, json } from "react-router-dom";
 import Cookies from 'js-cookie';
 import Get from '../controllers/Get.js'
+import NotificationContext from '../contexts/notifications/NotificationsContext.js'
 import UserNav from './UserNav.js';
 const stringSimilarity = require('string-similarity')
 
@@ -15,16 +16,40 @@ export default function User(props) {
   const [FetchedReviews, setFetchedReviews] = useState([])
   const [spinner, setSpinner] = useState(false)
   const [searchAlert, setSearchAlert] = useState(false)
+  const NotificationId = useContext(NotificationContext)
+  const [notificationId,setNotificationId] = useState('')
+  useEffect(() => {
+    if (NotificationId.notificationReviewId !== '') {
+      setNotificationId(NotificationId.notificationReviewId)
+    }
+  }, [NotificationId.notificationReviewId])
+  function moveToTop(reviews,id){
+    const index = reviews.findIndex((review) => {
+       return review._id === id ;
+    });
+    if (index !== -1) {
+      const [movie] = reviews.splice(index, 1);
+      reviews.push(movie);
+      NotificationId.setNotificationReviewId('')
+      // setNotificationId('')
+      return reviews
+    }
+    return []
+  }
+
   async function fetchReviews() {
     try {
       const data = await Get(`${process.env.REACT_APP_SERVER_URL}/reviews`, Cookies.get('jwt'))
       const jsonData = await data.json()
       if (data) {
-        // setReviews(jsonData.data)
+       
+        if (notificationId !== '') {
+          console.log('this is the filter rives apart from notification :' ,NotificationId.notificationReviewId)
+          moveToTop(jsonData.data,NotificationId.notificationReviewId )
+        }
         setFetchedReviews(jsonData.data)
         setSpinner(false)
-        // console.log(jsonData.data)
-        console.log('review has been fetched')
+
       }
 
     } catch (error) {
@@ -46,7 +71,7 @@ export default function User(props) {
       // fetchUserData()
     }
 
-  }, [])
+  }, [notificationId])
   function findSimilarMatches(reviews, searchTerm) {
     const matchingReviews = [];
     reviews.forEach(review => {
@@ -115,11 +140,11 @@ export default function User(props) {
     <>
       <UserNav cancelSearch={cancelSearch} search={performSearchQuery}></UserNav>
       <div id="homepage-review-cont" >
-      {spinner ? <div className='loader'></div> : ''}
-      <Homepage_body searchAlert={searchAlert} reviews={searchReviews.length > 0 ? searchReviews : FetchedReviews}></Homepage_body>
+        {spinner ? <div className='loader'></div> : ''}
+        <Homepage_body searchAlert={searchAlert} reviews={searchReviews.length > 0 ? searchReviews : FetchedReviews}></Homepage_body>
 
       </div>
-      
+
 
 
     </>

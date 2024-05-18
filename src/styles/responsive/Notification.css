@@ -7,7 +7,12 @@
     } */
     
 .notificationTabShow{
-    width: 70%;
+    width: 100%;
+  
+}
+#notificationCont{
+    width: 80%;
+        
 }
 }
 

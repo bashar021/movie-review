@@ -3,7 +3,9 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    
+    #homepage-cont{
+        margin-top: 17%;
+    }
     .movie_review_box{
         /* background-color: aqua; */
         /* display: flex; */

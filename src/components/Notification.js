@@ -1,12 +1,17 @@
-import React, { useRef ,useEffect} from 'react'
+import React, { useRef ,useEffect,useContext} from 'react'
 import Get from '../controllers/Get.js'
 import Cookies from 'js-cookie'
+import {useNavigate} from 'react-router-dom'
 import '../styles/Notification.css'
 import '../styles/responsive/Notification.css'
+import NotificationContext from '../contexts/notifications/NotificationsContext.js'
 
 export default function Notification(props) {
     // const notification = [1, 2, 3, 22, 2, 2, 2, 2, 2, 2, 2, 2, 22, , 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
     const notificationRef = useRef();
+    const notificationBox = useRef();
+    const notificationReview = useContext(NotificationContext)
+    const navigate = useNavigate()
     
     useEffect(() => {
         function handleClickOutside(event) {
@@ -15,23 +20,26 @@ export default function Notification(props) {
                 props.setShowNotification(false)
             }
         }
+        
         if (props.showNotification) {
             document.addEventListener('mousedown', handleClickOutside);
+          
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
+           
         }
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+           
         };
     }, [props.showNotification]);
     return (
         <>
         
-        <div className={props.showNotification?'notificationTabShow':'notificationTabShow'} ref={notificationRef} id="notificationTab">
-            <div id="notificationCont">
+        <div   className={props.showNotification?'notificationTabShow':'notificationTabShow'}  id="notificationTab">
+            <div   ref={notificationRef} id="notificationCont">
                 {[...props.userNotifications].reverse().map((item, key) => {
                     return (
-                        <div key={key} className='notificationBox'>
+                        <div  onClick={()=>{notificationReview.setNotificationReviewId(item.reviewId);navigate('/user')}}  key={key} className='cursor-pointer notificationBox'>
                             {/* <p></p> */}
                             <p><strong>{ item.senderUserName }</strong> 
                             { item.message }     

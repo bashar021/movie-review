@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect,useState,useContext } from 'react'
 import Navbar from './Navbar'
 import Homepage_body from './Homepage_body'
 import Profile_Details from './Profile_Details'
@@ -6,6 +6,7 @@ import LoginSignup from './LoginSignup'
 import Cookies from 'js-cookie';
 import { Route, BrowserRouter as Router, Routes, useNavigate, Redirect } from "react-router-dom"
 import Get from '../controllers/Get.js'
+import NotificationContext from '../contexts/notifications/NotificationsContext.js'
 import findMatches from '../controllers/FindMatchesReview.js'
 
 export default function Homepage(props) {
@@ -13,6 +14,7 @@ export default function Homepage(props) {
   const [loader,setLoader] = useState(false)
   const [searchAlert,setSearchAlert] = useState('')
   const navigate = useNavigate();
+ 
   useEffect(() => {
     if (Cookies.get('jwt')) {
       navigate('/user')
@@ -31,12 +33,15 @@ export default function Homepage(props) {
     }
     setLoader(false)
   }
+ 
   useEffect(() => {
+   
     (async ()=>{
       fetchGuestReviews()
     })()
     
   }, [])
+
   function handleReviewSearch(by,value){
     const matches = findMatches(reviews,value,by)
     // console.log(matches)
@@ -56,9 +61,13 @@ export default function Homepage(props) {
   return (
     <>
       <Navbar search={handleReviewSearch} cancelSearch={cancelReviewSearch}></Navbar>
+      <div id='homepage-cont'>
       {loader?<div className='loader'></div>:''}
       {searchAlert?<div className='no-result-found'></div>:""}
       <Homepage_body reviews={reviews} ></Homepage_body>
+
+      </div>
+     
 
     </>
 

@@ -128,7 +128,7 @@ export default function CommentSection(props) {
     async function deleteComment(parentCommentId, commentId) {
         try {
             const { obj: parentObject, parent: parentParent } = findObjectAndParentById(reviewComments, commentId);
-            const url = parentParent !== null ? `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}` : `http://localhost:500/user/comment/delete/${commentId}/${'none'}`
+            const url = parentParent !== null ? `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}` : `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${'none'}`
             const result = await Get(url, Cookies.get('jwt'))
             if (!result.ok) {
                 // console.log('comment has been deleted ')

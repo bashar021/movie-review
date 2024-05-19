@@ -6,6 +6,7 @@ import Get from '../controllers/Get.js'
 import Post from '../controllers/Post.js'
 import dateFormat from '../controllers/ConvertDate.js'
 import { updateCommentDescription } from '../controllers/CommentsControlers.js'
+import  DateFormat from "../controllers/ConvertDate.js"
 
 export default function CommentSection(props) {
     const [userComment, setUserComment] = useState('')
@@ -17,6 +18,7 @@ export default function CommentSection(props) {
     const [replyOnCommentInputValue, setReplyOnCommentInputValue] = useState('')
     const [updateComment, setUpdateComment] = useState(false)
     const [loader, setLoader] = useState(false)
+    const [commentCount,setCommentCount] = useState(0)
     // const commentOpenOnPos = window.pageYOffset || document.documentElement.scrollTop;
     async function fetchReviewComments() {
         // console.log('fetching comments for :', props.reviewId)
@@ -40,6 +42,7 @@ export default function CommentSection(props) {
             if (updatedComment.status === 201) {
                 setReviewComments([...reviewComments, jsonData.data])
                 setUserComment('')
+                setCommentCount(commentCount+1)
             } else {
                 console.log('comment not done ')
                 console.log(jsonData.error)
@@ -61,6 +64,7 @@ export default function CommentSection(props) {
                 const updatedComments = insertRepliesOnCommentsArray(replyOnCommentArea, jsonData.data.replies)
                 setReviewComments(updatedComments)
                 setReplyOnCommentInputValue('')
+                setCommentCount(commentCount+1)
             } else {
                 console.log('can not reply to the comment')
             }
@@ -130,11 +134,17 @@ export default function CommentSection(props) {
             const { obj: parentObject, parent: parentParent } = findObjectAndParentById(reviewComments, commentId);
             const url = parentParent !== null ? `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${parentParent._id}` : `${process.env.REACT_APP_SERVER_URL}/user/comment/delete/${commentId}/${'none'}`
             const result = await Get(url, Cookies.get('jwt'))
+            const data = await result.json()
             if (!result.ok) {
                 // console.log('comment has been deleted ')
                 return
             }
-            deleteCommentFromArray(reviewComments, commentId)
+            if(result.ok){
+                setCommentCount(commentCount-data.count)
+                deleteCommentFromArray(reviewComments, commentId)
+            }
+           
+           
         } catch (error) {
             console.log(error)
         }
@@ -156,6 +166,7 @@ export default function CommentSection(props) {
             const commentIndex = commentsArray.findIndex(obj => obj._id === parentObject._id);
             if (commentIndex !== -1) {
                 commentsArray.splice(commentIndex, 1);
+                // setCommentCount(commentCount-1)
             }
         }
         // console.log(reviewComments)
@@ -178,6 +189,8 @@ export default function CommentSection(props) {
     }
     useEffect(() => {
         fetchReviewComments()
+        setCommentCount(props.review.commentCount)
+
 
     }, []); //
     useEffect(() => {
@@ -227,15 +240,19 @@ export default function CommentSection(props) {
                         <div className='addCommentBox'>
                             <img src={userAvatar} alt='user' />
                             <div>
-                            <form>
-                                <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => { if (Cookies.get('jwt')) { setReplyOnCommentInputValue(event.target.value) } else { alert('for comment you have to login') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
-                            </form>
-                            {replyOnCommentInputValue !== '' ? (updateComment ? <button onClick={() => { handleUpdateCommentButton(item._id) }}>Update</button> : <button onClick={() => { replyOnComment() }}>Post</button>) : ''}
-                            {loader && replyOnCommentInputValue !== '' ? <span className='commentLoader' ></span> : ''}
-                            
+                                <form>
+                                    <TextareaAutosize value={replyOnCommentInputValue} onChange={(event) => { if (Cookies.get('jwt')) { setReplyOnCommentInputValue(event.target.value) } else { alert('for comment you have to login') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                                </form>
+                                <div style={{display:'flex'}}>
+                                {replyOnCommentInputValue !== '' ? (updateComment ? <button onClick={() => { handleUpdateCommentButton(item._id) }}>Update</button> : <button onClick={() => { replyOnComment() }}>Post</button>) : ''}
+                                {loader && replyOnCommentInputValue !== '' ? <p className='commentLoader' ></p> : ''}
+
+                                </div>
+                                
+
 
                             </div>
-                           
+
                         </div> : ''
                     }
 
@@ -251,29 +268,52 @@ export default function CommentSection(props) {
         )
     }
     return (
-        <div className='commentCont'>
-            <div className='addCommentBox'>
-                <img src={userAvatar} alt='user' />
+        <>
+            <div className='movie_review_box_child2'>
                 <div>
-                    <form>
-                        <TextareaAutosize value={userComment} onChange={(event) => { if (Cookies.get('jwt')) { setUserComment(event.target.value) } else { alert(' for comment you have to login ') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
-                    </form>
+                    <span>{props.review.userName}</span>
+                    <span className='cursor-pointer' onClick={() => { props.setOpenComment(props.review._id) }}>{commentCount} Comment</span>
+                </div>
+                <span>{DateFormat(props.review.date)}</span>
+            </div>
 
-                     {userComment !== '' ? <button onClick={() => { uploadReviewComments() }}>Post</button> : ''}
-                    {loader && userComment !== '' ? <span className='commentLoader'></span> : ''}
+
+
+
+            {props.openComment === props.review._id?
+            
+            <div className='commentCont'>
+                <div className='addCommentBox'>
+                    <img src={userAvatar} alt='user' />
+                    <div>
+                        <form>
+                            <TextareaAutosize value={userComment} onChange={(event) => { if (Cookies.get('jwt')) { setUserComment(event.target.value) } else { alert(' for comment you have to login ') } }} className='commentTextArea' placeholder='Add a Comment'></TextareaAutosize>
+                        </form>
+                        <div style={{display:'flex'}}>
+                        {userComment !== '' ? <button className='' onClick={() => { uploadReviewComments() }}>Post</button> : ''}
+                        {/* <p className='commentLoader'></p> */}
+                        {loader && userComment !== '' ? <p className='commentLoader'></p> : ''}
+
+                        </div>
+                        
+                        {/* <p><span  className='commentLoader'></span></p> */}
+                       
+                       
+                        {/* <p className='commentLoader'></p> */}
+                    </div>
+
+
                 </div>
 
-               
-            </div>
+                <div className='commentBoxesCont'>
+                    {
+                        [...reviewComments].reverse().map((item, index) => {
+                            return (returnCommentBody(item, item._id))
+                        })
+                    }
+                </div>
 
-            <div className='commentBoxesCont'>
-                {
-                    [...reviewComments].reverse().map((item, index) => {
-                        return (returnCommentBody(item, item._id))
-                    })
-                }
-            </div>
-
-        </div>
+            </div>:""}
+        </>
     )
 }

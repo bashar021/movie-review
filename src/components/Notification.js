@@ -12,7 +12,7 @@ export default function Notification(props) {
     const notificationBox = useRef();
     const notificationReview = useContext(NotificationContext)
     const navigate = useNavigate()
-    
+   
     useEffect(() => {
         function handleClickOutside(event) {
             if (notificationRef.current && !notificationRef.current.contains(event.target)) {
@@ -39,7 +39,9 @@ export default function Notification(props) {
             <div   ref={notificationRef} id="notificationCont">
                 {[...props.userNotifications].reverse().map((item, key) => {
                     return (
-                        <div  onClick={()=>{notificationReview.setNotificationReviewId(item.reviewId); props.setShowNotification(false);navigate('/user')}}  key={key} className='cursor-pointer notificationBox'>
+                        // notificationReview.setNotificationReviewId(item.reviewId); props.setShowNotification(false);navigate('/user')
+                        // props.markNotificationRead(item._id);
+                        <div  onClick={()=>{  if(key !== props.userNotifications.length-1){notificationReview.setNotificationReviewId(item.reviewId); props.setShowNotification(false);navigate('/user')} ; props.markNotificationRead(item._id);}}  key={key} className={` ${item.seen ? 'read-notifications' : 'unread-notifications'} cursor-pointer notificationBox `} >
                             {/* <p></p> */}
                             <p><strong>{ item.senderUserName }</strong> 
                             { item.message }     

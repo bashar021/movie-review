@@ -18,16 +18,29 @@ export default function UserNav(props) {
     const [searchResults, setSearchResults] = useState([]);
     const [showNotification,setShowNotification] = useState(false)
     const [userNotifications,setUserNotifications] = useState([])
+    const [notificationCount,setNotificationCount] = useState(0)
     const dropdownRef = useRef(null);
     const navigate = useNavigate()
-
+    async function markNotificationRead(notificationID){
+        const result =  await Get(`${process.env.REACT_APP_SERVER_URL}/user/notifications/mark/read/${notificationID}`,Cookies.get('jwt'))
+        console.log(result)
+        if(result.status === 200){
+            setNotificationCount(notificationCount-1)
+            getNotifications()
+        }
+     }
+     
     async function getNotifications(){
         try {
             const notifications = await Get(`${process.env.REACT_APP_SERVER_URL}/user/notifications`,Cookies.get('jwt'))
-            const jsonData = await notifications.json()
+           
             if(notifications.ok){
-                console.log(jsonData.data.notifications)
+                const jsonData = await notifications.json()
+                // console.log(jsonData.data.notifications)
                 setUserNotifications([...jsonData.data.notifications])
+                if(jsonData.data.notifications.length > 0){
+                    countUnreadNotification(jsonData.data.notifications)
+                }
             }else{
                 console.log('error in fetching notifications ')
             }
@@ -35,18 +48,25 @@ export default function UserNav(props) {
         } catch (error) {
             console.log(error)
             console.log(error.message)
-            // navigate('/503')
-            // alert('unable to load notification')
-            // navigate('/user/503')
-            // redirect("/503");
         }
        
     }
+    function countUnreadNotification(notifications){
+        let count = 0;
+        notifications.forEach((item)=>{
+            if(item.seen === false){
+                count++;
+            }
+        })
+        setNotificationCount(count)
+        console.log('unread notification :',count)
+
+    }
     useEffect(()=>{
         getNotifications()
+        
     },[])
-    
-   
+       
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -105,7 +125,11 @@ export default function UserNav(props) {
                 </div>
 
                 <div id='userNavOptionsBox' >
-                    <button onClick={()=>{setShowNotification(true)}} id='notificationIconBtn'><img src={notification_icon} alt="notification" /></button>
+                    <button onClick={()=>{setShowNotification(true)}} id='notificationIconBtn'>
+                        <img src={notification_icon} alt="notification" />
+                        {notificationCount>0? <span className="notification-badge">{notificationCount}</span>:''}
+                       
+                    </button>
                     <button onClick={() => { toggleDropdown() }} id='userProfileBtn'><img src={avatar_icon} alt="user" /></button>
                     <button onClick={() => { navigate('/user') }} id="homeBtn"><img width='35px' src={homeIcon} alt="" /></button>
                 </div>
@@ -122,7 +146,7 @@ export default function UserNav(props) {
 
 
             }
-            {showNotification?<Notification userNotifications={userNotifications} showNotification={showNotification} setShowNotification={setShowNotification}></Notification>:''}
+            {showNotification?<Notification markNotificationRead={markNotificationRead} userNotifications={userNotifications} showNotification={showNotification} setShowNotification={setShowNotification}></Notification>:''}
             
 
         </>

@@ -129,12 +129,15 @@
 
 #login_signup_btn_box {
     font-size: 60%;
-    width: 10%;
+    width: 20%;
+    /* background-color: aqua; */
+    /* float: right; */
+    text-align: end;
 }
 
 #login_signup_btn_box a {
     margin-left: 5%;
-    margin-right: 5%;
+    /* margin-right: 5%; */
     text-decoration: none;
     color: white;
 

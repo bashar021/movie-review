@@ -101,14 +101,15 @@ export default function Homepage_body(props) {
                 <button className='cursor-pointer add-to-watchList-button' title='Add to WatchList' onClick={() => { addToWatchList(item.userId, item._id) }}><img src={save_icon} alt="save" /></button>
               </div>
 
-              <div className='movie_review_box_child2'>
+              {/* <div className='movie_review_box_child2'>
                 <div>
                   <span>{item.userName}</span>
-                  <span className='cursor-pointer' onClick={() => { setOpenComment(item._id) }}>Comment</span>
+                  <span className='cursor-pointer' onClick={() => { setOpenComment(item._id) }}>{item.commentCount} Comment</span>
                 </div>
                 <span>{DateFormat(item.date)}</span>
-              </div>
-              {openComment === item._id ? <CommentSection reviewId={item._id} setOpenComment={setOpenComment} ></CommentSection> : ''}
+              </div> */}
+              {/* {openComment === item._id ? <CommentSection  review={item} reviewId={item._id} setOpenComment={setOpenComment} ></CommentSection> : ''} */}
+              <CommentSection openComment={openComment}  review={item} reviewId={item._id} setOpenComment={setOpenComment} ></CommentSection>
 
 
             </div>

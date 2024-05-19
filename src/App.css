@@ -9,6 +9,9 @@
 }
 
 
+.inline-block{
+  display: inline-block;
+}
 
 .loader {
   /* position: absolute; */
@@ -28,7 +31,13 @@
  
   animation: 1s rotate infinite linear;
   margin:auto;
-  margin-top:1%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  /* margin-top:1%; */
+  /* display: block; */
+  /* order: 10; */
+  /* position: absolute; */
+
 }
 
 .loader::before {
@@ -125,6 +134,7 @@
   animation: 1s rotate infinite linear;
   margin-top: 0.6%;
   margin-left:1%;
+  /* background-color: aqua; */
 }
 
 .commentLoader::before {
@@ -138,6 +148,7 @@
   /* background-color: #121212; */
   background-color : #2a2929;
   border-radius: 20px; /* Reduced from 48px to 28.8px */
+  z-index: 20;
 }
 
 .commentLoader::after {

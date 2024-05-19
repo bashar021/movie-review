@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 import { getMovieDetails } from '../controllers/TmdbApi.js'
 import UserNav from './UserNav.js'
 import DeleteConfirmation from './DeleteConfirmation.js'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import findMatches from '../controllers/FindMatchesReview.js'
 import genreList from '../Modules/GenreOptionsList.js'
 import BriefView from './BriefView.js'
@@ -31,7 +31,7 @@ export default function My_reviews(props) {
   const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
   // const movieList = [1, 2, , 3, 4, 4,4,4,4,4,4,4,,4,4]
-  
+
   const [myReviewTags, setMyReviewTags] = useState([])
   const [selectTagOption, setSelectTagOption] = useState('')
   const [tagOptionAlert, setTagOptionAlert] = useState('')
@@ -46,10 +46,10 @@ export default function My_reviews(props) {
   const [editReviewId, setEditReviewId] = useState('')
   // const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [deleteConfirmationPopUp, setDeleteConfirmationPopUp] = useState('')
-  const [searchAlert,setSearchAlert] = useState('')
-  const [movieSearchAlert,setMovieSearchAlert] = useState('')
-  const [movieLoader,setMovieLoader] = useState(false)
-  const [briefView,setBriefView] = useState(null)
+  const [searchAlert, setSearchAlert] = useState('')
+  const [movieSearchAlert, setMovieSearchAlert] = useState('')
+  const [movieLoader, setMovieLoader] = useState(false)
+  const [briefView, setBriefView] = useState(null)
 
   function selectFormReviewTags(value) {
     setSelectTagOption(value)
@@ -116,30 +116,30 @@ export default function My_reviews(props) {
   async function deleteMyReview(reviewId) {
     // setDeleteConfirmationPopUp(true)
     // if (deleteConfirmation) {
-      // console.log(reviewId)
-      setLoader(true)
-      const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/review/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
-      const jsonData = await updatedReviews.json()
-      if (updatedReviews.ok) {
-        // console.log(jsonData.data.ReviewList)
-        setMyReviewsList(jsonData.data.ReviewList)
+    // console.log(reviewId)
+    setLoader(true)
+    const updatedReviews = await Post(`${process.env.REACT_APP_SERVER_URL}/user/review/delete`, { reviewId: reviewId }, Cookies.get('jwt'))
+    const jsonData = await updatedReviews.json()
+    if (updatedReviews.ok) {
+      // console.log(jsonData.data.ReviewList)
+      setMyReviewsList(jsonData.data.ReviewList)
 
-      } else {
-        console.log('unable to delete ')
-      }
-      setLoader(false)
-      // setDeleteConfirmation(false)
+    } else {
+      console.log('unable to delete ')
+    }
+    setLoader(false)
+    // setDeleteConfirmation(false)
 
     // }
 
   }
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[deleteConfirmation])
+  }, [deleteConfirmation])
 
   async function fetchMyReviews() {
     setLoader(true)
-    try{
+    try {
       console.log('fetching my reviews funciton ')
       const myReviews = await Get(`${process.env.REACT_APP_SERVER_URL}/user/review`, Cookies.get('jwt'))
       if (myReviews.status === 200) {
@@ -150,26 +150,26 @@ export default function My_reviews(props) {
         setMyReviewsList(jsonData.data.ReviewList)
       } else {
         console.log('can not fetch the user revies ')
-        
+
       }
 
-    }catch(error){
+    } catch (error) {
       console.log('error in fetching')
       console.log(error)
       navigate('/500')
     }
-   
+
     console.log('nothing found')
     setLoader(false)
   }
   useEffect(() => {
-    if(Cookies.get('jwt')){
+    if (Cookies.get('jwt')) {
       fetchMyReviews()
-    }else{
+    } else {
       navigate('/401')
     }
-    
-    
+
+
     // getMovieDetails()
     // setLoader(false)
 
@@ -251,61 +251,64 @@ export default function My_reviews(props) {
     setMovieReleaseDate(movie.movieReleaseDate)
     setMovieTmdbReference(movie.tmdbUrl)
     setMovieSearchAlert('')
-    setMyReviewTags([...movie.genres,...myReviewTags])
-    
+    setMyReviewTags([...movie.genres, ...myReviewTags])
+
 
 
   }
-  function searchReviewInMyReviewList(option,query){
-    console.log(option,query)
-    const matches =  findMatches(myReviewsList,query,option)
-    if(matches.length>0){
+  function searchReviewInMyReviewList(option, query) {
+    console.log(option, query)
+    const matches = findMatches(myReviewsList, query, option)
+    if (matches.length > 0) {
       setSearchAlert('')
       setMyReviewsList([...matches])
-    }else{
+    } else {
       setSearchAlert('No Result Found :')
     }
     console.log(matches)
   }
-  function deleteConfirmation(value){
-    if(value){
-      console.log(value,'for deletion')
+  function deleteConfirmation(value) {
+    if (value) {
+      console.log(value, 'for deletion')
       deleteMyReview(deleteConfirmationPopUp)
       setDeleteConfirmationPopUp('')
-    }else{
-      console.log(value,'for deletion')
+    } else {
+      console.log(value, 'for deletion')
       setDeleteConfirmationPopUp('')
 
     }
 
 
   }
-  function cancelationSearch(){
+  function cancelationSearch() {
     console.log('cancel the search')
     fetchMyReviews()
     setSearchAlert('')
   }
-  
+
 
   return (
 
     <>
-    {briefView !== null ?<BriefView review={briefView} setBriefView={setBriefView}></BriefView>:''}
+      {briefView !== null ? <BriefView review={briefView} setBriefView={setBriefView}></BriefView> : ''}
       <UserNav search={searchReviewInMyReviewList} cancelSearch={cancelationSearch} ></UserNav>
-      {deleteConfirmationPopUp !== "" ? <DeleteConfirmation  confirm={deleteConfirmation}></DeleteConfirmation> : ''}
+      {deleteConfirmationPopUp !== "" ? <DeleteConfirmation confirm={deleteConfirmation}></DeleteConfirmation> : ''}
       {/* <DeleteConfirmation></DeleteConfirmation> */}
-      {searchAlert !== ''?<div className='no-result-found' >{searchAlert} </div>:''}
+      {searchAlert !== '' ? <div className='no-result-found' >{searchAlert} </div> : ''}
 
-     
+
 
       <div id='myReviewsCont' style={{ color: 'white' }}>
-      {loader ? <div className='loader'></div> : ''}
-
+        {loader ?
+          <div style={{ width: '100%', marginBottom: '0px', paddingBottom: "0px", height: 'fit-content', marginTop: '1%' }}>
+            <div className='loader'></div><br />
+          </div> : ''
+        }
         {myReviewsList.map((item, key) => {
           return (
-            <div  key={key} className='myReviewBoxes'>
+            <div key={key} className='myReviewBoxes'>
               {/* <img className='myReviewBoxesImg' src={spidermanImg} alt={item.movieName} /> */}
-              <img className='myReviewBoxesImg'  onClick={()=>{setBriefView(item)}} src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt={item.movieName} />
+              <img className='myReviewBoxesImg' onClick={() => { setBriefView(item) }} src={item.moviePosterUrl !== '' ? item.moviePosterUrl : brokenImage} alt={item.movieName} />
               <div className='myReviewBoxesDetailsCont '   >
                 <div className='myReviewOptions'>
                   {/* <img src={imdb} alt="" /> */}
@@ -317,7 +320,7 @@ export default function My_reviews(props) {
                 </div>
 
 
-                <div className='myReviewDetailsBox cursor-pointer' onClick={()=>{setBriefView(item)}}>
+                <div className='myReviewDetailsBox cursor-pointer' onClick={() => { setBriefView(item) }}>
                   <h6>{item.movieName}</h6>
                   <p>{parseFloat(item.movieRating).toFixed(1)}  <span>{item.movieReleaseDate} </span></p>
                   <div className='tags_cont'>
@@ -337,7 +340,15 @@ export default function My_reviews(props) {
 
 
         })}
+
+
         <button className='cursor-pointer' onClick={() => { setDisplayMyReviewForm(true) }} id='myReviewAddBtn'>&#43;</button>
+
+
+
+
+
+
 
         {
           displayMyReviewForm ?
@@ -350,8 +361,8 @@ export default function My_reviews(props) {
                   </div>
 
                   <div className='movieQueryListBox'>
-                   {movieLoader ? <div style={{width:'25px',height:'25px',borderRadius:'50%',margin:'auto',backgroundColor:'#1f1916',marginTop:'2%',marginBottom:'2%'}} className='commentLoader'></div>:""}
-                    {movieSearchAlert !== ''?<div>{movieSearchAlert}</div>:''}
+                    {movieLoader ? <div style={{ width: '25px', height: '25px', borderRadius: '50%', margin: 'auto', backgroundColor: '#1f1916', marginTop: '2%', marginBottom: '2%' }} className='commentLoader'></div> : ""}
+                    {movieSearchAlert !== '' ? <div>{movieSearchAlert}</div> : ''}
                     {/* {myReviewMovieName !== ''?  */}
                     {movieList.map((item, index) => {
                       return (
@@ -372,9 +383,6 @@ export default function My_reviews(props) {
 
                 </div>
 
-
-
-
                 <select className="myReviewFormInput" value={selectTagOption} onChange={(event) => { selectFormReviewTags(event.target.value) }} placeholder="select tags">
                   <option value="" >Genre</option>
                   {genreList.map((option, index) => (
@@ -389,8 +397,8 @@ export default function My_reviews(props) {
                   }
                 </div>
                 <input className="myReviewFormInput" type="text" value={myReviewDownloadLink} onChange={(event) => { setMyReviewDownloadLink(event.target.value) }} placeholder='Download link' />
-                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description'/>
-                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event) => { setSelectedMovieRating(event.target.value) }} placeholder="Rating"/>
+                <input className="myReviewFormInput" type="text" value={myReviewDescription} onChange={(event) => { setMyReviewDescription(event.target.value) }} placeholder='Description' />
+                <input className="myReviewFormInput" type="text" value={selectedMovieRating} onChange={(event) => { setSelectedMovieRating(event.target.value) }} placeholder="Rating" />
 
                 <div stye={{ display: 'flex' }}>
                   {editReviewId === '' ? <button className="reviewFormBtn cursor-pointer" onClick={() => { saveMyReviewToDB() }} >save</button> : <button className="reviewFormBtn cursor-pointer" onClick={() => { updateEditedReview() }} >Update</button>}

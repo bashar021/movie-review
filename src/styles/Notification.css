@@ -43,7 +43,7 @@
     padding-bottom: 0.5%;
     padding-left: 5%;
     padding-right: 5%;
-    color: rgb(219, 219, 219);
+    
     z-index: -2;
     /* background-color: aqua; */
     border-bottom: solid;
@@ -64,4 +64,12 @@
     /* color:black; */
     /* padding-left: 5%; */
     /* padding-right: 5%; */
+}
+.unread-notifications{
+    /* background-color:red; */
+    color: rgb(221, 18, 18);
+}
+.read-notifications{
+
+    color: rgb(219, 219, 219);
 }

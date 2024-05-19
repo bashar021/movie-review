@@ -72,12 +72,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: aqua; */
-    /* width: 100%; */
+    width: 98%;
+    padding:0 1% 0 1%;
+}
+
+.watchlist_movie_review_box_child2 div{
+    width: 80%; 
 }
 
 .watchlist_movie_review_box_child2 div span{
-    margin-right: 50%;
+    margin-right: 10%;
 }
 .watchlist_movie_review_box_child button{
     float: right;

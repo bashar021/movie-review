@@ -30,14 +30,15 @@ export default function BriefView(props) {
           </div>
 
 
-          <div className='brief-review-comment-line'>
+          {/* <div className='brief-review-comment-line'>
             <div>
               <span>{props.review.userName}</span>
               <span className='cursor-pointer' onClick={() => { setOpenComment(props.review._id) }}>Comment</span>
             </div>
             <span>{DateFormat(props.review.date)}</span>
-          </div>
-          {openComment === props.review._id ? <CommentSection  reviewId={props.review._id} setOpenComment={setOpenComment} ></CommentSection> : ''}
+          </div> */}
+          {/* {openComment === props.review._id ?  : ''} */}
+          <CommentSection openComment={openComment} review={props.review}  reviewId={props.review._id} setOpenComment={setOpenComment} ></CommentSection>
 
         </div>
 

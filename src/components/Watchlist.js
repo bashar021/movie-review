@@ -124,7 +124,12 @@ export default function Watchlist() {
       
      
       <div id="user_watchlist">
-      {loader? <div className="loader"></div>:''}
+      {/* {loader? <div className="loader"></div>:''} */}
+      {loader ?
+          <div style={{ width: '100%', marginBottom: '0px', paddingBottom: "0px", height: 'fit-content', marginTop: '1%' }}>
+            <div className='loader'></div><br />
+          </div> : ''
+        }
         {
           userWatchLists.map((item, index) => {
             return (
@@ -158,7 +163,7 @@ export default function Watchlist() {
                 <div className='watchlist_movie_review_box_child2'>
                   <div>
                     <span>{item.userName}</span>
-                    <span>Comment</span>
+                    <span>{item.commentCount} Comment</span>
                   </div>
 
                   <span>{dateFormat(item.date)}</span>

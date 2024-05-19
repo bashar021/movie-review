@@ -83,10 +83,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* background-color: red; */
+    width: 98%;
+    padding:0 1% 0 1%;
+}
+.movie_review_box_child2 div{
+    /* background-color: aqua; */
+    width: 80%;
+    /* column-gap: 5px; */
+    /* row-gap: 10%; */
+    
 }
 
 .movie_review_box_child2 div span {
-    margin-right: 50%;
+    margin-right: 10%;
+    /* background-color: aqua; */
 }
 
 .movie_review_box_child button {

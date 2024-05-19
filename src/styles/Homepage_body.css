@@ -62,16 +62,17 @@
     margin-left: 1.5%;
     margin-top: 1%;
     border-radius: 10px;
-    padding: 2px 10px 2px 10px;
+    padding: 5px 10px 5px 10px;
     background-color: white;
     color: black;
     border-color:transparent;
     cursor: pointer;
-    display: block;
+    height: fit-content;
+    /* display: block; */
     /* flex: 1; */
     /* flex-basis: 100%; */
-    order: 4; /* Make sure it's ordered after the pseudo-element */
-  flex: 1 1 auto;
+    /* order: 4; Make sure it's ordered after the pseudo-element */
+    /* flex: 1 1 auto; */
 }
 .addCommentBox button:hover{
     background-color: rgb(236, 235, 235);

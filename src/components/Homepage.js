@@ -35,20 +35,24 @@ export default function Homepage(props) {
   }
  
   useEffect(() => {
-   
-    (async ()=>{
-      fetchGuestReviews()
-    })()
+
+    fetchGuestReviews()
     
   }, [])
 
   function handleReviewSearch(by,value){
     const matches = findMatches(reviews,value,by)
-    // console.log(matches)
+    
+    // console.log('matches found ')
     if(matches.length >0){
-      setReviews([...matches])
+
+      // console.log('result found ')
+      // console.log(matches)
+      setReviews(matches)
+      // console.log(reviews)
 
     }else{
+      console.log('no result found ')
       setSearchAlert('No Result Found :')
     }
   }

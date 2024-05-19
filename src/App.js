@@ -17,7 +17,7 @@ import BriefView from './components/BriefView.js'
 
 import { Unauthorized, NotFoundPage, BadRequest, RequestTimeOut, ForBidden, ServiceUnavailable, InternalServerError } from './controllers/ErrorPages.js'
 
-const io = socketIOClient.connect('http://localhost:8080/');
+// const io = socketIOClient.connect('http://localhost:8080/');
 // const socket = socketIOClient.connect(ENDPOINT);
 // const socket = socketIOClient.connect('http://localhost:500');
 // const socket = socketIOClient(ENDPOINT,{withCredentials: true});
@@ -34,14 +34,14 @@ function App() {
 
 
 
-  io.on('connection', client => {
-    client.on('event', data => {
-      console.log('user is online ')
-    });
-    client.on('disconnect', () => {
-      console.log('user is offline ')
-    });
-  });
+  // io.on('connection', client => {
+  //   client.on('event', data => {
+  //     console.log('user is online ')
+  //   });
+  //   client.on('disconnect', () => {
+  //     console.log('user is offline ')
+  //   });
+  // });
 
 
 
